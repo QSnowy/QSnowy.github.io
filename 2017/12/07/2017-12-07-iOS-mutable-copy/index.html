@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在iOS开发过程中，我们要对某个对象进行拷贝的时候，一般会用copy和mutableCopy两种方法，在刚接触iOS的时候，我一般把copy称为浅拷贝，mutableCopy称为深拷贝，但是随着不断踩坑，才发现对不同类型的对象执行拷贝操作，得到的结果跟自己的预期并不一致。然后看了网上诸多关于深浅拷贝的文章，再结合自己写代码测试，才慢慢理解到，其实iOS中的深浅拷贝得到的结果，是跟拷贝对象的类型有关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS深浅拷贝">
+<meta property="og:url" content="http://yoursite.com/2017/12/07/2017-12-07-iOS-mutable-copy/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在iOS开发过程中，我们要对某个对象进行拷贝的时候，一般会用copy和mutableCopy两种方法，在刚接触iOS的时候，我一般把copy称为浅拷贝，mutableCopy称为深拷贝，但是随着不断踩坑，才发现对不同类型的对象执行拷贝操作，得到的结果跟自己的预期并不一致。然后看了网上诸多关于深浅拷贝的文章，再结合自己写代码测试，才慢慢理解到，其实iOS中的深浅拷贝得到的结果，是跟拷贝对象的类型有关">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/assets/images/CopyingCollections.png">
+<meta property="article:published_time" content="2017-12-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-06T06:38:34.518Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS 深浅拷贝">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/assets/images/CopyingCollections.png">
+
+<link rel="canonical" href="http://yoursite.com/2017/12/07/2017-12-07-iOS-mutable-copy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>iOS深浅拷贝 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/07/2017-12-07-iOS-mutable-copy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS深浅拷贝
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2017-12-07T00:00:00+08:00">2017-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-06 14:38:34" itemprop="dateModified" datetime="2020-04-06T14:38:34+08:00">2020-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在iOS开发过程中，我们要对某个对象进行拷贝的时候，一般会用<code>copy</code>和<code>mutableCopy</code>两种方法，在刚接触iOS的时候，我一般把<code>copy</code>称为浅拷贝，<code>mutableCopy</code>称为深拷贝，但是随着不断踩坑，才发现对不同类型的对象执行拷贝操作，得到的结果跟自己的预期并不一致。然后看了网上诸多关于深浅拷贝的文章，再结合自己写代码测试，才慢慢理解到，其实iOS中的深浅拷贝得到的结果，是跟拷贝对象的类型有关系的。</p>
+<p>在iOS开发中，一般情况下，拷贝对象大概分为3种：非集合对象、集合对象、自定义对象。好了，话不多讲，以下就是针对这三种不同类型对象所写的深浅拷贝测试代码。</p>
+<h3 id="1、iOS中非集合类的深浅拷贝"><a href="#1、iOS中非集合类的深浅拷贝" class="headerlink" title="1、iOS中非集合类的深浅拷贝"></a>1、iOS中非集合类的深浅拷贝</h3><p>非集合类对象深浅拷贝示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (void)stringCopy&#123;</span><br><span class="line">	<span class="type">NSString</span> *str = @<span class="string">"123456"</span>;</span><br><span class="line">	<span class="comment">// 内容内存地址不变，共用同一块内存</span></span><br><span class="line">	<span class="type">NSString</span> *cpyStr = [str copy];</span><br><span class="line">	<span class="comment">// 内容地址改变，另外开辟一块内存空间，内容可变</span></span><br><span class="line">	<span class="type">NSMutableString</span> *mutCpyStr = [str mutableCopy];</span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"NSString内容地址：str = %p; copyStr = %p; mutStr = %p;"</span>,str,cpyStr,mutCpyStr);</span><br><span class="line">	<span class="comment">// str = 0x10e6d9068; copyStr = 0x10e6d9068; mutStr = 0x604000253f20;</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"NSstring指针地址：str = %p; copyStr = %p; mutStr = %p;"</span>,&amp;str,&amp;cpyStr,&amp;mutCpyStr);</span><br><span class="line">	<span class="comment">// str = 0x7fff51525be8; copyStr = 0x7fff51525be0; mutStr = 0x7fff51525bd8;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">- (void)mutableStringCopy&#123;</span><br><span class="line"></span><br><span class="line">   <span class="type">NSMutableString</span> *formatStr = [<span class="type">NSMutableString</span> stringWithFormat:@<span class="string">"呵呵哒🙄"</span>];</span><br><span class="line">   <span class="comment">// 内容地址改变，开辟一块内存空间，内容不可变</span></span><br><span class="line">   <span class="type">NSString</span> *cpyStr = [formatStr copy];</span><br><span class="line">   <span class="comment">// 内容地址改变，开辟一块内存空间，内容可变</span></span><br><span class="line">   <span class="type">NSMutableString</span> *mutCpyStr = [formatStr mutableCopy];</span><br><span class="line"></span><br><span class="line">   <span class="type">NSLog</span>(@<span class="string">"NSMutableString内容地址：str = %p; copyStr = %p; mutStr = %p;"</span>,formatStr,cpyStr,mutCpyStr);</span><br><span class="line">   <span class="comment">// str = 0x600000249690; copyStr = 0x600000249cc0; mutStr = 0x600000249750;</span></span><br><span class="line"></span><br><span class="line">   <span class="type">NSLog</span>(@<span class="string">"NSMutableString指针地址：str = %p; copyStr = %p; mutStr = %p;"</span>,&amp;formatStr,&amp;cpyStr,&amp;mutCpyStr);</span><br><span class="line">   <span class="comment">// str = 0x7fff51525be8; copyStr = 0x7fff51525be0; mutStr = 0x7fff51525bd8;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由上面的代码可以看出，<code>非集合对象</code>的拷贝规律是这样的：</p>
+<ul>
+<li>不可变的非集合对象<code>copy</code>，指针拷贝，共用同一片内存；</li>
+<li>不可变的非集合对象<code>mutableCopy</code>，创建新内存空间，成为可变对象。</li>
+<li>可变的非集合对象<code>copy</code>，创建新内存空间，成为不可变对象；</li>
+<li>可变的非集合对象<code>mutableCopy</code>，创建新内存空间。</li>
+</ul>
+<h3 id="2、iOS中集合类的深浅拷贝"><a href="#2、iOS中集合类的深浅拷贝" class="headerlink" title="2、iOS中集合类的深浅拷贝"></a>2、iOS中集合类的深浅拷贝</h3><h4 id="集合类的拷贝主要分为下面三种类型："><a href="#集合类的拷贝主要分为下面三种类型：" class="headerlink" title="集合类的拷贝主要分为下面三种类型："></a>集合类的拷贝主要分为下面三种类型：</h4><ul>
+<li>浅复制(shallow copy)：在浅复制操作时，对于被复制对象的每一层都是指针复制。</li>
+<li>深复制(one-level-deep copy)：在深复制操作时，对于被复制对象，至少有一层是深复制。</li>
+<li>完全复制(real-deep copy)：在完全复制操作时，对于被复制对象的每一层都是对象复制。</li>
+</ul>
+<p>来自苹果官方的解释图例：<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Collections/Articles/Copying.html" target="_blank" rel="noopener" title="官方链接">官方链接</a><br><img src="/assets/images/CopyingCollections.png" alt=""></p>
+<p>集合的深浅拷贝示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">- (void)collectionCopy&#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">NSString</span> *str = [<span class="type">NSString</span> stringWithFormat:@<span class="string">"呵呵哒"</span>]();</span><br><span class="line">	<span class="type">NSMutableString</span> *mutStr = [<span class="type">NSMutableString</span> stringWithFormat:@<span class="string">"萌萌哒"</span>]();</span><br><span class="line">	<span class="type">NSArray</span> *arr = [<span class="type">NSArray</span> arrayWithObjects:@<span class="string">"one"</span>, @<span class="string">"two"</span>, @<span class="string">"three"</span>, <span class="literal">nil</span>]();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 不可变集合对象只包含非集合对象</span></span><br><span class="line">	<span class="type">NSArray</span> *imutArr1 = [<span class="type">NSArray</span> arrayWithObjects:str, mutStr, <span class="literal">nil</span>]();</span><br><span class="line">	<span class="comment">// 浅复制，创建一个指针直接指向已有内存空间</span></span><br><span class="line">	<span class="type">NSArray</span> *cpyImutArr1 = [imutArr1 copy]();</span><br><span class="line">	<span class="comment">// 深复制，创建新的集合内存空间，新瓶装老酒</span></span><br><span class="line">	<span class="type">NSMutableArray</span> *mutCpyImutArr1 = [imutArr1 mutableCopy]();</span><br><span class="line">	<span class="comment">// 创建新的集合内存空间，并且对集合内元素进行 copy 操作</span></span><br><span class="line">	<span class="type">NSMutableArray</span> *initArr1 = [\[<span class="type">NSMutableArray</span> alloc]() initWithArray:imutArr1 copyItems:<span class="type">YES</span>];</span><br><span class="line">	<span class="comment">// 完全深复制，如果元素是自定义类型，需要实现NSCoding协议</span></span><br><span class="line">	<span class="type">NSArray</span> *deepCpyArr1 = [<span class="type">NSKeyedUnarchiver</span> unarchiveObjectWithData:\[<span class="type">NSKeyedArchiver</span> archivedDataWithRootObject:imutArr1]()];</span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n imutArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;imutArr1, imutArr1, imutArr1[<span class="number">0</span>](), imutArr1[<span class="number">1</span>](), imutArr1[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// imutArr1 info : pointer = 0x7fff5d946bc8; content = 0x604000443960; first = 0x604000037520; second = 0x604000442d30; third = 0x6040004446e0</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n cpyImutArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;cpyImutArr1, cpyImutArr1, cpyImutArr1[<span class="number">0</span>](), cpyImutArr1[<span class="number">1</span>](), cpyImutArr1[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// cpyImutArr1 info : pointer = 0x7fff5d946bc0; content = 0x604000443960; first = 0x604000037520; second = 0x604000442d30; third = 0x6040004446e0</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n mutCpyImutArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;mutCpyImutArr1, mutCpyImutArr1, mutCpyImutArr1[<span class="number">0</span>](), mutCpyImutArr1[<span class="number">1</span>](), mutCpyImutArr1[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// mutCpyImutArr1 info : pointer = 0x7fff5d946bb8; content = 0x604000444290; first = 0x604000037520; second = 0x604000442d30; third = 0x6040004446e0</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n initArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;initArr1, initArr1, initArr1[<span class="number">0</span>](), initArr1[<span class="number">1</span>](), initArr1[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// initArr1 info : pointer = 0x7fff5d946bb0; content = 0x604000442e80; first = 0x604000037520; second = 0x604000231aa0; third = 0x6040004446e0</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n deepCpyArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;deepCpyArr1, deepCpyArr1, deepCpyArr1[<span class="number">0</span>](), deepCpyArr1[<span class="number">1</span>](), deepCpyArr1[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// deepCpyArr1 info : pointer = 0x7fff5d946ba8; content = 0x604000443210; first = 0x604000231ce0; second = 0x604000444710; third = 0x6040004441d0</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 可变集合对象包含集合对象</span></span><br><span class="line">	<span class="type">NSMutableArray</span> *mutArr2 = [<span class="type">NSMutableArray</span> arrayWithObjects:str, mutStr, arr, <span class="literal">nil</span>]();</span><br><span class="line">	<span class="comment">// 深复制，创建新的集合内存空间，内容不变，新的集合不可变</span></span><br><span class="line">	<span class="type">NSMutableArray</span> *cpyMutArr2 = [mutArr2 copy]();</span><br><span class="line">	<span class="comment">// 深复制，创建新的集合内存空间，内容不变</span></span><br><span class="line">	<span class="type">NSMutableArray</span> *mutCpyMutArr2 = [mutArr2 mutableCopy]();</span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n mutArr2 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;mutArr2, mutArr2, mutArr2[<span class="number">0</span>](), mutArr2[<span class="number">1</span>](), mutArr2[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// mutArr2 info : pointer = 0x7fff53507bc8; content = 0x60400025e2a0; first = 0x60400023fa40; second = 0x60400025d2b0; third = 0x60400025f710</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n cpyMutArr2 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;cpyMutArr2, cpyMutArr2, cpyMutArr2[<span class="number">0</span>](), cpyMutArr2[<span class="number">1</span>](), cpyMutArr2[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// cpyMutArr2 info : pointer = 0x7fff53507bc0; content = 0x60400025d760; first = 0x60400023fa40; second = 0x60400025d2b0; third = 0x60400025f710</span></span><br><span class="line"></span><br><span class="line">	<span class="type">NSLog</span>(@<span class="string">"\n mutCpyImutArr1 info : pointer = %p; content = %p; first = %p; second = %p; third = %p"</span>,&amp;mutCpyMutArr2, mutCpyMutArr2, mutCpyMutArr2[<span class="number">0</span>](), mutCpyMutArr2[<span class="number">1</span>](), mutCpyMutArr2[<span class="number">2</span>]());</span><br><span class="line">	<span class="comment">// mutCpyImutArr1 info : pointer = 0x7fff53507bb8; content = 0x60400025d310; first = 0x60400023fa40; second = 0x60400025d2b0; third = 0x60400025f710</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过代码和日志可以看出：</p>
+<ul>
+<li><code>不可变集合</code>的拷贝规律大概是这样的：</li>
+</ul>
+<p><code>[immutableObject copy]</code> <strong>浅复制，指针复制</strong></p>
+<p><code>[immutableObject mutableCopy]</code> <strong>深复制，不是完全复制，容器是新的可变容器，内容还是旧的</strong></p>
+<ul>
+<li><code>可变集合</code>的拷贝规律大概是这样的：</li>
+</ul>
+<p><code>[mutableObject copy]</code> <strong>深复制 返回对象为immutable</strong></p>
+<p><code>[mutableObject mutableCopy]</code> <strong>深复制，不是完全复制，容器是新的可变容器，内容还是旧的</strong></p>
+<p>若想要实现完全拷贝，则需要使用下面的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSArray</span> *newArr = [<span class="type">NSKeyedUnarchiver</span> unarchiveObjectWithData:[<span class="type">NSKeyedArchiver</span> archivedDataWithRootObject:oldArr]];</span><br></pre></td></tr></table></figure>
+
+<p>至于拷贝后的集合是否可变，则跟旧集合的是否可变一致。值得注意的是，如果集合内含有自定义的类对象，则该类需要实现 <code>NSCoding</code> 协议。</p>
+<p>如果根据集合重新<code>init</code>一个新的集合出来，就像这样子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSMutableArray</span> *newArr = [[<span class="type">NSMutableArray</span> alloc] initWithArray:arr copyItems:<span class="type">YES</span>];</span><br></pre></td></tr></table></figure>
+
+<p>那么生成的新集合中的元素，并不一定都是完全拷贝的。因为执行上面的代码，只会对集合内的元素执行 <code>copy</code>方法。</p>
+<h3 id="3、iOS中自定义对象的深浅拷贝"><a href="#3、iOS中自定义对象的深浅拷贝" class="headerlink" title="3、iOS中自定义对象的深浅拷贝"></a>3、iOS中自定义对象的深浅拷贝</h3><p>iOS中自定义对象要想实现拷贝，必须要实现<code>NSCopying</code>或者<code>NSMutableCopying</code>协议。<br>自定义对象实现拷贝示例代码:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Cat.h</span></span><br><span class="line"># <span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface <span class="type">Cat</span> : <span class="type">NSObject</span> &lt;<span class="type">NSCopying</span>, <span class="type">NSMutableCopying</span>&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, assign) <span class="type">NSUInteger</span> age;</span><br><span class="line">@property (nonatomic, copy) <span class="type">NSString</span> *name;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cat.m</span></span><br><span class="line"># <span class="keyword">import</span> "Cat.h"</span><br><span class="line"></span><br><span class="line">@implementation <span class="type">Cat</span></span><br><span class="line"></span><br><span class="line">- (instancetype)copyWithZone:(<span class="type">NSZone</span> *)zone&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)mutableCopyWithZone:(<span class="type">NSZone</span> *)zone&#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">Cat</span> *cat = [[<span class="type">Cat</span> alloc] <span class="keyword">init</span>];</span><br><span class="line">	cat.name = @<span class="string">"hello"</span>;</span><br><span class="line">	<span class="keyword">return</span> cat;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>从代码可以看出，自定义类要遵守<code>NSCopy</code>协议或者<code>NSMutableCopy</code>协议，拷贝协议的代码由自己来实现，那么自定义类对象执行<code>copy</code>或者<code>mutableCopy</code>所得的结果，无论是指针层面的浅拷贝，还是完全拷贝，都是由自己来决定的。值得注意的是，如果集合里面包含了自定义类对象，那么要用<code>NSKeyedArchiver/NSKeyedUnarchiver</code>实现集合的完全拷贝，则需要自定义类实现<code>NSCoding</code>协议。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (id)initWithCoder:(<span class="type">NSCoder</span> *)aDecoder&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">self</span> = [<span class="keyword">super</span> <span class="keyword">init</span>];</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">self</span> == <span class="literal">nil</span>)&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">self</span>.name = [aDecoder decodeObjectForKey:@<span class="string">"name"</span>];</span><br><span class="line">	<span class="comment">// 依次写下想要decode的属性</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)encodeWithCoder:(<span class="type">NSCoder</span> *)aCoder&#123;</span><br><span class="line"></span><br><span class="line">	[aCoder encodeObject:<span class="keyword">self</span>.name forKey:@<span class="string">"name"</span>];</span><br><span class="line">	<span class="comment">// 依次写下想要encode的属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" rel="tag"># iOS 深浅拷贝</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/18/2018-04-18-iOS-tips/" rel="next" title="iOS开发小技巧">
+      iOS开发小技巧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、iOS中非集合类的深浅拷贝"><span class="nav-number">1.</span> <span class="nav-text">1、iOS中非集合类的深浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、iOS中集合类的深浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">2、iOS中集合类的深浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集合类的拷贝主要分为下面三种类型："><span class="nav-number">2.1.</span> <span class="nav-text">集合类的拷贝主要分为下面三种类型：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、iOS中自定义对象的深浅拷贝"><span class="nav-number">3.</span> <span class="nav-text">3、iOS中自定义对象的深浅拷贝</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

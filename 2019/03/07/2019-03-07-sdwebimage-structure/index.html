@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、加载、管理开发第三方库。 整个源码大概分为：图片管理、下载器、下载任务、缓存、编码解码、UI展示几个模块。  图片管理：SDWebImageManager 下载器：SDWebImageDownloader 下载任务：SDWebImageDownloaderOperation 缓存：SDWebImageCache 解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDWebImage代码解析">
+<meta property="og:url" content="http://yoursite.com/2019/03/07/2019-03-07-sdwebimage-structure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、加载、管理开发第三方库。 整个源码大概分为：图片管理、下载器、下载任务、缓存、编码解码、UI展示几个模块。  图片管理：SDWebImageManager 下载器：SDWebImageDownloader 下载任务：SDWebImageDownloaderOperation 缓存：SDWebImageCache 解">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/images/sdwebmanger.png">
+<meta property="og:image" content="http://yoursite.com/images/sddownloader.png">
+<meta property="og:image" content="http://yoursite.com/images/sdcache.png">
+<meta property="og:image" content="http://yoursite.com/images/sdcoder.png">
+<meta property="og:image" content="http://yoursite.com/images/sdextension.png">
+<meta property="og:image" content="http://yoursite.com/images/sdother.png">
+<meta property="article:published_time" content="2019-03-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-06T06:38:34.520Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS SDWebImage">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/sdwebmanger.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/07/2019-03-07-sdwebimage-structure/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>SDWebImage代码解析 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/2019-03-07-sdwebimage-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SDWebImage代码解析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-07 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-07T00:00:00+08:00">2019-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-06 14:38:34" itemprop="dateModified" datetime="2020-04-06T14:38:34+08:00">2020-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、加载、管理开发第三方库。</p>
+<p>整个源码大概分为：图片管理、下载器、下载任务、缓存、编码解码、UI展示几个模块。</p>
+<ul>
+<li>图片管理：SDWebImageManager</li>
+<li>下载器：SDWebImageDownloader</li>
+<li>下载任务：SDWebImageDownloaderOperation</li>
+<li>缓存：SDWebImageCache</li>
+<li>解码：SDWebImageIOCoder、SDWebImageGIFCoder</li>
+<li>UI展示：UIImageView+WebCache 等</li>
+<li>配置其他：SDImageCacheConfig等</li>
+</ul>
+<p><strong>先说一下，整体的图片下载流程：</strong><br>给定一个URL给<code>Manager</code>后，会先用<code>Cache</code>检测是否有对应的缓存图片，如果没有缓存且需要下载，<code>Manager</code>持有的<code>Downloader</code>会生成一个<code>URLSession</code>，将<code>URL</code>转化为一个<code>Request</code>，然后把<code>Request</code>和<code>URLSession</code>包装在<code>Operation</code>中，将<code>Operation</code>加入到自己的<code>下载队列</code>中，开始执行下载任务；任务完成或者异常，经过<code>系统的Request代理</code>回调，拿到图片数据或异常，通过<code>Coder</code>将数据解压为图片，利用<code>Cache</code>缓存在内存和磁盘中，通过<code>block回调</code>给到主线程进行处理。</p>
+<h3 id="图片管理"><a href="#图片管理" class="headerlink" title="图片管理"></a>图片管理</h3><p>采用单例模式，初始化后默认会持有<code>SDWebImageCache</code>和<code>SDWebImageDownloader</code>两个实例，便于进行图片缓存和下载管理。不过用户也可以通过下面的方法自行指定</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nonnull instancetype)initWithCache:(nonnull <span class="type">SDImageCache</span> *)cache downloader:(nonnull <span class="type">SDWebImageDownloader</span> *)downloader</span><br></pre></td></tr></table></figure>
+<p>同时提供代理方法，为用户提供URL过滤功能，需要自己实现代理方法。</p>
+<h4 id="常用方法："><a href="#常用方法：" class="headerlink" title="常用方法："></a>常用方法：</h4><p>使用Mananger下载指定URL图片，监听下载进度，完成回调，返回一个可取消的下载任务。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (nullable id &lt;<span class="type">SDWebImageOperation</span>&gt;)loadImageWithURL:(nullable <span class="type">NSURL</span> *)url</span><br><span class="line">                                              options:(<span class="type">SDWebImageOptions</span>)options</span><br><span class="line">                                             progress:(nullable <span class="type">SDWebImageDownloaderProgressBlock</span>)progressBlock</span><br><span class="line">                                            completed:(nullable <span class="type">SDInternalCompletionBlock</span>)completedBlock;</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h3><p>采用单例模式，用户可以指定URLSessionConfiguration，所有URL请求都会使用这一个session配置。</p>
+<h4 id="常用方法：-1"><a href="#常用方法：-1" class="headerlink" title="常用方法："></a>常用方法：</h4><p>指定session配置</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nonnull instancetype)initWithSessionConfiguration:(nullable <span class="type">NSURLSessionConfiguration</span> *)sessionConfiguration</span><br></pre></td></tr></table></figure>
+<p>开始一个URL下载请求，监听进度，完成回调，返回一个下载Token，用户可以使用这个Token取消下载。一个URL会产生一个Operation，加入下载队列，进行网络请求。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (nullable <span class="type">SDWebImageDownloadToken</span> *)downloadImageWithURL:(nullable <span class="type">NSURL</span> *)url</span><br><span class="line">                                                   options:(<span class="type">SDWebImageDownloaderOptions</span>)options</span><br><span class="line">                                                  progress:(nullable <span class="type">SDWebImageDownloaderProgressBlock</span>)progressBlock</span><br><span class="line">                                                 completed:(nullable <span class="type">SDWebImageDownloaderCompletedBlock</span>)completedBlock</span><br></pre></td></tr></table></figure>
+
+<p>取消一个下载任务</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)cancel:(nullable <span class="type">SDWebImageDownloadToken</span> *)token</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载任务"><a href="#下载任务" class="headerlink" title="下载任务"></a>下载任务</h3><p>这里面定义了一个任务可交互的协议，<code>SDWebImageDownloaderOperationInterface</code>，协议规定了任务的初始化方法、添加任务进度和完成的回调的方法、任务的取消方法以及证书的添加。任务继承与NSOperation，一个请求对应了一个任务，这些任务会放在下载管理单例中的一个下载队列中，可以按先入先出的顺序执行，也可以按堆栈的后入先出的顺序执行。</p>
+<p>任务在收到请求回应后，会将接受到的图片数据解码成为UIImage对象，再通过Block进行回调给主线程。</p>
+<h4 id="常用方法：-2"><a href="#常用方法：-2" class="headerlink" title="常用方法："></a>常用方法：</h4><p>初始化一个任务，这是一个实现的协议方法。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (nonnull instancetype)initWithRequest:(nullable <span class="type">NSURLRequest</span> *)request</span><br><span class="line">                              inSession:(nullable <span class="type">NSURLSession</span> *)session</span><br><span class="line">                                options:(<span class="type">SDWebImageDownloaderOptions</span>)options</span><br></pre></td></tr></table></figure>
+<p>添加任务进度回调</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (nullable id)addHandlersForProgress:(nullable <span class="type">SDWebImageDownloaderProgressBlock</span>)progressBlock</span><br><span class="line">                            completed:(nullable <span class="type">SDWebImageDownloaderCompletedBlock</span>)completedBlock</span><br></pre></td></tr></table></figure>
+
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>通过这个模块，将下载完成的图片，存储到内存或者磁盘中。同样是单例模式，用户可以指定缓存路径。使用了<code>SDMemoryCache:NSCache</code>进行内存存储，内部使用了<code>NSMapTable&lt;KeyType, ObjectType&gt; *weakCache</code>这个属性进行实际的内存存储工作。</p>
+<h4 id="常用方法：-3"><a href="#常用方法：-3" class="headerlink" title="常用方法："></a>常用方法：</h4><p>指定缓存路径</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (nonnull instancetype)initWithNamespace:(nonnull <span class="type">NSString</span> *)ns</span><br><span class="line">                       diskCacheDirectory:(nonnull <span class="type">NSString</span> *)directory</span><br></pre></td></tr></table></figure>
+<p>存储图片到内存或者磁盘，图片通过编码工具转为二进制数据，最终存储在磁盘中。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)storeImage:(nullable <span class="type">UIImage</span> *)image</span><br><span class="line">         imageData:(nullable <span class="type">NSData</span> *)imageData</span><br><span class="line">            forKey:(nullable <span class="type">NSString</span> *)key</span><br><span class="line">            toDisk:(<span class="type">BOOL</span>)toDisk</span><br><span class="line">        completion:(nullable <span class="type">SDWebImageNoParamsBlock</span>)completionBlock</span><br></pre></td></tr></table></figure>
+<p>从内存或者磁盘中找到与key对应的图片</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nullable <span class="type">UIImage</span> *)imageFromCacheForKey:(nullable <span class="type">NSString</span> *)key;</span><br></pre></td></tr></table></figure>
+
+<p>清除内存和磁盘缓存</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)clearMemory;</span><br><span class="line">- (void)clearDiskOnCompletion:(nullable <span class="type">SDWebImageNoParamsBlock</span>)completion;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编码解码"><a href="#编码解码" class="headerlink" title="编码解码"></a>编码解码</h3><p>框架中有IOCoder和GIFCoder，我这里只展示IOCoder，下载完的图片会通过转化为NSData，同时从网络获取的数据也会被解码转化为image。</p>
+<h4 id="关键方法："><a href="#关键方法：" class="headerlink" title="关键方法："></a>关键方法：</h4><p>将图片根据不同的图片格式，转化为二进制数据。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">NSData</span> *)encodedDataWithImage:(<span class="type">UIImage</span> *)image format:(<span class="type">SDImageFormat</span>)format&#123;</span><br><span class="line">    <span class="comment">// 判断图片格式，最后会保存为PNG或者JPEG格式，这里省略了一些源码</span></span><br><span class="line">    <span class="type">NSMutableData</span> *imageData = [<span class="type">NSMutableData</span> data];</span><br><span class="line">    <span class="type">CFStringRef</span> imageUTType = [<span class="type">NSData</span> sd_UTTypeFromSDImageFormat:format];</span><br><span class="line">    <span class="comment">// 创建 image destination.</span></span><br><span class="line">    <span class="type">CGImageDestinationRef</span> imageDestination = <span class="type">CGImageDestinationCreateWithData</span>((__bridge <span class="type">CFMutableDataRef</span>)imageData, imageUTType, <span class="number">1</span>, <span class="type">NULL</span>);</span><br><span class="line">    <span class="comment">// 设置图片方向信息</span></span><br><span class="line">    <span class="type">NSMutableDictionary</span> *properties = [<span class="type">NSMutableDictionary</span> dictionary];</span><br><span class="line">    <span class="type">NSInteger</span> exifOrientation = [<span class="type">SDWebImageCoderHelper</span> exifOrientationFromImageOrientation:image.imageOrientation];</span><br><span class="line">    [properties setValue:@(exifOrientation) forKey:(__bridge <span class="type">NSString</span> *)kCGImagePropertyOrientation];</span><br><span class="line">    <span class="comment">// 添加图片 to the destination.</span></span><br><span class="line">    <span class="type">CGImageDestinationAddImage</span>(imageDestination, image.<span class="type">CGImage</span>, (__bridge <span class="type">CFDictionaryRef</span>)properties);</span><br><span class="line">    <span class="comment">// 完成，将图片写入数据.</span></span><br><span class="line">    <span class="type">CGImageDestinationFinalize</span>(imageDestination);    </span><br><span class="line">    <span class="keyword">return</span> [imageData copy];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将图片解码，只是简单调用了系统接口。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">UIImage</span> *)decodedImageWithData:(<span class="type">NSData</span> *)data&#123;</span><br><span class="line">       <span class="keyword">if</span> (!data) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">UIImage</span> *image = [[<span class="type">UIImage</span> alloc] initWithData:data];</span><br><span class="line">    image.sd_imageFormat = [<span class="type">NSData</span> sd_imageFormatForImageData:data];</span><br><span class="line">    <span class="keyword">return</span> image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>渐进式解析图片，主要用到了<code>CGImageSourceCreateIncremental</code>函数处理。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">UIImage</span> *)incrementallyDecodedImageWithData:(<span class="type">NSData</span> *)data finished:(<span class="type">BOOL</span>)finished &#123;</span><br><span class="line">    <span class="keyword">if</span> (!_imageSource) &#123;</span><br><span class="line">        <span class="comment">// 创建渐进式ImageSource</span></span><br><span class="line">        _imageSource = <span class="type">CGImageSourceCreateIncremental</span>(<span class="type">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">UIImage</span> *image;</span><br><span class="line">    <span class="comment">// 将累积的数据传进来，不一定是完整的</span></span><br><span class="line">    <span class="type">CGImageSourceUpdateData</span>(_imageSource, (__bridge <span class="type">CFDataRef</span>)data, finished);</span><br><span class="line">    <span class="keyword">if</span> (_width + _height == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 获取source信息，从信息中拿到图片的宽、高、方向信息，省略了代码 </span></span><br><span class="line">        <span class="type">CFDictionaryRef</span> properties = <span class="type">CGImageSourceCopyPropertiesAtIndex</span>(_imageSource, <span class="number">0</span>, <span class="type">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (_width + _height &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 拿到了有效信息，开始创建图片</span></span><br><span class="line">        <span class="type">CGImageRef</span> partialImageRef = <span class="type">CGImageSourceCreateImageAtIndex</span>(_imageSource, <span class="number">0</span>, <span class="type">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (partialImageRef) &#123;</span><br><span class="line">            image = [[<span class="type">UIImage</span> alloc] initWithCGImage:partialImageRef scale:<span class="number">1</span> orientation:_orientation];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果传入了结束标志，说明当前图片的数据下载完了，返回生成好的image</span></span><br><span class="line">    <span class="keyword">if</span> (finished) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_imageSource) &#123;</span><br><span class="line">            <span class="type">CFRelease</span>(_imageSource);</span><br><span class="line">            _imageSource = <span class="type">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解压缩图片，主要用<code>CGBitmapContextCreate</code>创建位图。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该函数接收参数有data、width、height、bitsPerComponent、bytesPerRow、space、bitmapInfo</span></span><br><span class="line"><span class="comment">// data 如果不为NULL，那么它应该指向一块大小至少为 bytesPerRow * height 字节的内存；如果为NULL，那么系统就会为我们自动分配和释放所需的内存，所以一般指定NULL即可；</span></span><br><span class="line"><span class="comment">// width height 位图要输出的宽度和高度，宽高方面有多少颗pixel；</span></span><br><span class="line"><span class="comment">// bitsPerComponent 一个像素中每个独立的颜色分量使用的bit数，一个像素由RGB三色组合，这个参数代表R、G、B每个分量使用几个bit；</span></span><br><span class="line"><span class="comment">// bytesPerRow 每一行使用的字节数，设为0，系统会自动优化，自行设定大小至少为 width * bytes per pixel字节，bytesPerPixel是每颗像素需要多长字节去存储；</span></span><br><span class="line"><span class="comment">// space 颜色空间，常用的有&lt;RGB、CMYK、BGR、HSB&gt;，不同的空间对相同的数值有不同的解析方式，最终得到的图片色彩也不一样；</span></span><br><span class="line"><span class="comment">// bitmapInfo alpha信息表示alpha在像素中排在哪个位置、颜色分量是否浮点、像素格式的字节顺序；iOS使用小端字节序；</span></span><br><span class="line"><span class="type">CG_EXTERN</span> <span class="type">CGContextRef</span> __nullable <span class="type">CGBitmapContextCreate</span>(void * __nullable data,</span><br><span class="line">    size_t width, size_t height, size_t bitsPerComponent, size_t bytesPerRow,</span><br><span class="line">    <span class="type">CGColorSpaceRef</span> cg_nullable space, uint32_t bitmapInfo)</span><br><span class="line">    <span class="type">CG_AVAILABLE_STARTING</span>(__MAC_10_0, __IPHONE_2_0);</span><br><span class="line"></span><br><span class="line">- (nullable <span class="type">UIImage</span> *)sd_decompressedImageWithImage:(nullable <span class="type">UIImage</span> *)image &#123;</span><br><span class="line">    @autoreleasepool&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">CGImageRef</span> imageRef = image.<span class="type">CGImage</span>;</span><br><span class="line">        <span class="comment">// 当前设备的色彩空间，实现用了once_token</span></span><br><span class="line">        <span class="type">CGColorSpaceRef</span> colorspaceRef = <span class="type">SDCGColorSpaceGetDeviceRGB</span>();</span><br><span class="line">        <span class="type">BOOL</span> hasAlpha = <span class="type">SDCGImageRefContainsAlpha</span>(imageRef);</span><br><span class="line">        <span class="comment">// 位图信息：32位 + alpha信息</span></span><br><span class="line">        <span class="type">CGBitmapInfo</span> bitmapInfo = kCGBitmapByteOrder32Host;</span><br><span class="line">        bitmapInfo |= hasAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst;</span><br><span class="line">        size_t width = <span class="type">CGImageGetWidth</span>(imageRef);</span><br><span class="line">        size_t height = <span class="type">CGImageGetHeight</span>(imageRef);</span><br><span class="line">        <span class="comment">// 传入各种参数</span></span><br><span class="line">        <span class="type">CGContextRef</span> context = <span class="type">CGBitmapContextCreate</span>(<span class="type">NULL</span>,</span><br><span class="line">                                                     width,</span><br><span class="line">                                                     height,</span><br><span class="line">                                                     kBitsPerComponent,</span><br><span class="line">                                                     <span class="number">0</span>,</span><br><span class="line">                                                     colorspaceRef,</span><br><span class="line">                                                     bitmapInfo);</span><br><span class="line">        <span class="keyword">if</span> (context == <span class="type">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> image;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 在上下文绘制图片</span></span><br><span class="line">        <span class="type">CGContextDrawImage</span>(context, <span class="type">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height), imageRef);</span><br><span class="line">        <span class="comment">// 创建图片</span></span><br><span class="line">        <span class="type">CGImageRef</span> imageRefWithoutAlpha = <span class="type">CGBitmapContextCreateImage</span>(context);</span><br><span class="line">        <span class="type">UIImage</span> *imageWithoutAlpha = [[<span class="type">UIImage</span> alloc] initWithCGImage:imageRefWithoutAlpha scale:image.scale orientation:image.imageOrientation];</span><br><span class="line">        <span class="type">CGContextRelease</span>(context);</span><br><span class="line">        <span class="type">CGImageRelease</span>(imageRefWithoutAlpha);</span><br><span class="line">        <span class="keyword">return</span> imageWithoutAlpha;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="UI展示"><a href="#UI展示" class="headerlink" title="UI展示"></a>UI展示</h3><p>为UIImageView和UIButton提供了类别方法，可以方便的设置相应的图片属性。</p>
+<h4 id="常用方法：-4"><a href="#常用方法：-4" class="headerlink" title="常用方法："></a>常用方法：</h4><p>为UIImageView设置图片</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)sd_setImageWithURL:(nullable <span class="type">NSURL</span> *)url</span><br><span class="line">          placeholderImage:(nullable <span class="type">UIImage</span> *)placeholder;</span><br></pre></td></tr></table></figure>
+<p>添加图片加载Activity，定义在<code>UIView+WebCache</code>中。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)sd_setShowActivityIndicatorView:(<span class="type">BOOL</span>)show;</span><br></pre></td></tr></table></figure>
+
+<p>自己做的SDWebImage框架脑图，赶脚有点大😂</p>
+<p>图片管理模块</p>
+<p><img src="/images/sdwebmanger.png" alt=""></p>
+<p>图片下载工具模块</p>
+<p><img src="/images/sddownloader.png" alt=""></p>
+<p>图片缓存模块</p>
+<p><img src="/images/sdcache.png" alt=""></p>
+<p>图片解码模块</p>
+<p><img src="/images/sdcoder.png" alt=""></p>
+<p>扩展工具模块</p>
+<p><img src="/images/sdextension.png" alt=""></p>
+<p>其他模块</p>
+<p><img src="/images/sdother.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-SDWebImage/" rel="tag"># iOS SDWebImage</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/22/2019-01-22-mac-soft-list/" rel="prev" title="MAC上自己常用的软件清单">
+      <i class="fa fa-chevron-left"></i> MAC上自己常用的软件清单
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/05/2019-07-05-2019%E5%85%A5%E6%88%B7%E5%B9%BF%E5%B7%9E/" rel="next" title="2019广州学历入户亲身经历">
+      2019广州学历入户亲身经历 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#图片管理"><span class="nav-number">1.</span> <span class="nav-text">图片管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法："><span class="nav-number">1.1.</span> <span class="nav-text">常用方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载器"><span class="nav-number">2.</span> <span class="nav-text">下载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法：-1"><span class="nav-number">2.1.</span> <span class="nav-text">常用方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载任务"><span class="nav-number">3.</span> <span class="nav-text">下载任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法：-2"><span class="nav-number">3.1.</span> <span class="nav-text">常用方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">4.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法：-3"><span class="nav-number">4.1.</span> <span class="nav-text">常用方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码解码"><span class="nav-number">5.</span> <span class="nav-text">编码解码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键方法："><span class="nav-number">5.1.</span> <span class="nav-text">关键方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI展示"><span class="nav-number">6.</span> <span class="nav-text">UI展示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法：-4"><span class="nav-number">6.1.</span> <span class="nav-text">常用方法：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

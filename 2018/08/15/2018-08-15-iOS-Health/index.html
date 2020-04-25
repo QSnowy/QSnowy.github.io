@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。 以读取和写入健康步数为例，首先用Xcode新建一个空白项目，然后配置项目相应的选项：  info.plist 添加NSHealthUpdateUsageDescription和NSHealthShareUsageDescription;  Capabilities选项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS HealthKit 接入">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/2018-08-15-iOS-Health/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。 以读取和写入健康步数为例，首先用Xcode新建一个空白项目，然后配置项目相应的选项：  info.plist 添加NSHealthUpdateUsageDescription和NSHealthShareUsageDescription;  Capabilities选项">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-06T06:38:34.519Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS HealthKit">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/08/15/2018-08-15-iOS-Health/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>iOS HealthKit 接入 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/15/2018-08-15-iOS-Health/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS HealthKit 接入
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-08-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-08-15T00:00:00+08:00">2018-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-06 14:38:34" itemprop="dateModified" datetime="2020-04-06T14:38:34+08:00">2020-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。</p>
+<p>以读取和写入健康步数为例，首先用Xcode新建一个空白项目，然后配置项目相应的选项：</p>
+<ol>
+<li><p>info.plist 添加<code>NSHealthUpdateUsageDescription</code>和<code>NSHealthShareUsageDescription</code>;</p>
+</li>
+<li><p>Capabilities选项中打开<code>HealthKit</code>;</p>
+</li>
+<li><p>BuildPhases选项中添加<code>HealthKit.frmaework</code>;</p>
+</li>
+</ol>
+<p>写一个工具类<code>HKHandle</code>，用来判断设备是否支持HealthKit、请求相应权限之类的功能，二话不说上代码。</p>
+<h3 id="HKHandle-h-文件，定义几个常用的接口："><a href="#HKHandle-h-文件，定义几个常用的接口：" class="headerlink" title="HKHandle.h 文件，定义几个常用的接口："></a>HKHandle.h 文件，定义几个常用的接口：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HKHandle.h</span></span><br><span class="line">#<span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#<span class="keyword">import</span> &lt;HealthKit/HealthKit.h&gt;</span><br><span class="line"></span><br><span class="line">@interface <span class="type">HKHandle</span> : <span class="type">NSObject</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HealthKit 实例，全局最好只有一个store</span></span><br><span class="line">+ (<span class="type">HKHealthStore</span> *)singleStore;</span><br><span class="line"><span class="comment">// 默认要访问的HealthKit权限</span></span><br><span class="line">+ (<span class="type">NSSet</span> *)defaultHKSet;</span><br><span class="line"><span class="comment">// 请求获取HealthKit权限</span></span><br><span class="line">+ (void)requsetDefaultAuth:(void(^)(<span class="type">BOOL</span> suc, <span class="type">NSString</span> *msg))complention;</span><br><span class="line"><span class="comment">// 写入数据的设备信息，非必需</span></span><br><span class="line">+ (<span class="type">HKDevice</span> *)defaultDevice;</span><br><span class="line"><span class="comment">// 读取健康数据</span></span><br><span class="line">+ (void)readDataWithSampleType:(<span class="type">HKSampleType</span> *)type completion:(void(^)(<span class="type">NSArray</span> *results, <span class="type">NSError</span> *error))completion;</span><br><span class="line"><span class="comment">// 保存健康数据</span></span><br><span class="line">+ (void)saveHKObject:(<span class="type">HKObject</span> *)obj completion:(void (^) (<span class="type">BOOL</span> suc, <span class="type">NSError</span> *error))completion;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h3 id="HKHandle-m文件，接口的具体实现："><a href="#HKHandle-m文件，接口的具体实现：" class="headerlink" title="HKHandle.m文件，接口的具体实现："></a>HKHandle.m文件，接口的具体实现：</h3><p>生成单例store对象，用于存储健康数据：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="type">HKHealthStore</span> *)singleStore&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> <span class="type">HKHealthStore</span> *store;</span><br><span class="line">    <span class="keyword">static</span> dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        store = [[<span class="type">HKHealthStore</span> alloc] <span class="keyword">init</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> store;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>健康数据类型，这里只有步数类型：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="type">NSSet</span> *)defaultHKSet</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 步数</span></span><br><span class="line">    <span class="type">NSSet</span> *<span class="keyword">set</span> = [<span class="type">NSSet</span> setWithObjects:</span><br><span class="line">                  [<span class="type">HKQuantityType</span> quantityTypeForIdentifier:<span class="type">HKQuantityTypeIdentifierStepCount</span>],<span class="literal">nil</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">set</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断设备是否支持，请求HealthKit权限：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (void)requsetDefaultAuth:(void(^)(<span class="type">BOOL</span> suc, <span class="type">NSString</span> *msg))complention&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">HKHealthStore</span> *store = [<span class="keyword">self</span> singleStore];</span><br><span class="line">    <span class="keyword">if</span> (![<span class="type">HKHealthStore</span> isHealthDataAvailable])&#123;</span><br><span class="line">        <span class="comment">// 设备不支持 HealthKit</span></span><br><span class="line">        <span class="keyword">if</span> (complention)&#123;</span><br><span class="line">            complention(<span class="type">NO</span>, @<span class="string">"设备不支持HealthKit"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 请求相应健康权限</span></span><br><span class="line">    <span class="type">NSSet</span> *hkset = [<span class="keyword">self</span> defaultHKSet];</span><br><span class="line">    [store requestAuthorizationToShareTypes:hkset readTypes:hkset completion:^(<span class="type">BOOL</span> success, <span class="type">NSError</span> * _Nullable error) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">NSLog</span>(@<span class="string">"auth success = %@, error = %@"</span>,@(success), error);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (complention)&#123;</span><br><span class="line">            complention(success, error.localizedDescription);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>⚠️健康数据的读取和写入，都需要先获得相应的权限</em></p>
+<p>读取步数：<br>HealthKit读取数据，需要一个query对象，步数读取需要<code>HKSampleQuery</code>类型的query。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">+ (void)readDataWithSampleType:(<span class="type">HKSampleType</span> *)type completion:(void(^)(<span class="type">NSArray</span> *results, <span class="type">NSError</span> *error))completion&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">NSPredicate</span> *predicate = [<span class="keyword">self</span> todayPredicate];</span><br><span class="line">    </span><br><span class="line">    <span class="type">HKSampleQuery</span> *query = [[<span class="type">HKSampleQuery</span> alloc] initWithSampleType:type predicate:predicate limit:<span class="type">HKObjectQueryNoLimit</span> sortDescriptors:<span class="literal">nil</span> resultsHandler:^(<span class="type">HKSampleQuery</span> * _Nonnull query, <span class="type">NSArray</span>&lt;__kindof <span class="type">HKSample</span> *&gt; * _Nullable results, <span class="type">NSError</span> * _Nullable error) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (completion)&#123;</span><br><span class="line">            </span><br><span class="line">            completion(results, error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    <span class="type">HKHealthStore</span> *store = [<span class="keyword">self</span> singleStore];</span><br><span class="line">    [store executeQuery:query];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="type">NSPredicate</span> *)todayPredicate&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">NSCalendar</span> *calendar = [<span class="type">NSCalendar</span> currentCalendar];</span><br><span class="line">    <span class="type">NSDate</span> *now = [<span class="type">NSDate</span> date];</span><br><span class="line">    <span class="type">NSDateComponents</span> *components = [calendar components:<span class="type">NSCalendarUnitYear</span>|<span class="type">NSCalendarUnitMonth</span>|<span class="type">NSCalendarUnitDay</span> fromDate:now];</span><br><span class="line">    <span class="type">NSDate</span> *startDate = [calendar dateFromComponents:components];</span><br><span class="line">    <span class="type">NSDate</span> *endDate = [calendar dateByAddingUnit:<span class="type">NSCalendarUnitDay</span> value:<span class="number">1</span> toDate:startDate options:<span class="number">0</span>];</span><br><span class="line">    <span class="type">NSPredicate</span> *predicate = [<span class="type">HKQuery</span> predicateForSamplesWithStartDate:startDate endDate:endDate options:<span class="type">HKQueryOptionStrictStartDate</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> predicate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取到步数的处理：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">IBAction</span>)readSteps:(id)sender &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">HKSampleType</span> *stepType = [<span class="type">HKSampleType</span> quantityTypeForIdentifier:<span class="type">HKQuantityTypeIdentifierStepCount</span>];</span><br><span class="line">    [<span class="type">HKHandle</span> readDataWithSampleType:stepType completion:^(<span class="type">NSArray</span> *results, <span class="type">NSError</span> *error) &#123;</span><br><span class="line">        <span class="comment">// 切换主线程</span></span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           </span><br><span class="line">            <span class="keyword">if</span> (!results)&#123;</span><br><span class="line">                <span class="type">NSLog</span>(@<span class="string">"查询失败了 error = %@"</span>,error);</span><br><span class="line">                <span class="keyword">return</span> ;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">NSInteger</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">HKQuantitySample</span> *sample <span class="keyword">in</span> results) &#123;</span><br><span class="line">                double <span class="built_in">count</span> = [sample.quantity doubleValueForUnit:[<span class="type">HKUnit</span> countUnit]];</span><br><span class="line">                sum += <span class="built_in">count</span>;</span><br><span class="line">                <span class="type">NSLog</span>(@<span class="string">"count = %@"</span>,@(<span class="built_in">count</span>));</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">self</span>.title = [<span class="type">NSString</span> stringWithFormat:@<span class="string">"%@"</span>,@(sum)];</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通用保存健康数据接口：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用保存接口</span></span><br><span class="line">+ (void)saveHKObject:(<span class="type">HKObject</span> *)obj completion:(void (^) (<span class="type">BOOL</span> suc, <span class="type">NSError</span> *error))completion&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (![obj isKindOfClass:[<span class="type">HKObject</span> <span class="class"><span class="keyword">class</span>]])</span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">HKHealthStore</span> *store = [<span class="keyword">self</span> singleStore];</span><br><span class="line">    <span class="comment">// 保存健康数据</span></span><br><span class="line">    [store saveObject:obj withCompletion:^(<span class="type">BOOL</span> success, <span class="type">NSError</span> * _Nullable error) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (completion)&#123;</span><br><span class="line">            </span><br><span class="line">            completion(success, error);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成步数，调用写入接口:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成步数，调用接口写入</span></span><br><span class="line">- (<span class="type">IBAction</span>)writeSetp:(id)sender &#123;</span><br><span class="line">    [<span class="keyword">self</span>.view endEditing:<span class="type">YES</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_stepCount == <span class="number">0</span> || _startTime == <span class="literal">nil</span> || _endTime == <span class="literal">nil</span>)&#123;</span><br><span class="line">        [<span class="type">UIAlertController</span> showSimpleAlertWithTitle:@<span class="string">"提示"</span> message:@<span class="string">"请补充所有选项"</span> presentdViewController:<span class="keyword">self</span>];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 步数</span></span><br><span class="line">    <span class="type">HKQuantity</span> *steps = [<span class="type">HKQuantity</span> quantityWithUnit:[<span class="type">HKUnit</span> countUnit] doubleValue:_stepCount];</span><br><span class="line">    </span><br><span class="line">    <span class="type">HKQuantitySample</span> *stepSample = [<span class="type">HKQuantitySample</span> quantitySampleWithType:[<span class="type">HKQuantityType</span> quantityTypeForIdentifier:<span class="type">HKQuantityTypeIdentifierStepCount</span>] quantity:steps startDate:_startTime endDate:_endTime device:[<span class="type">HKHandle</span> defaultDevice] metadata:<span class="literal">nil</span>];</span><br><span class="line">    </span><br><span class="line">    [<span class="type">HKHandle</span> saveHKObject:stepSample completion:^(<span class="type">BOOL</span> suc, <span class="type">NSError</span> *error) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (suc)&#123;</span><br><span class="line">            </span><br><span class="line">            [<span class="type">UIAlertController</span> showSimpleAlertWithTitle:@<span class="string">"提示"</span> message:@<span class="string">"写入成功"</span> presentdViewController:<span class="keyword">self</span>];</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="type">NSLog</span>(@<span class="string">"写入失败，error = %@"</span>,error);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-HealthKit/" rel="tag"># iOS HealthKit</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/15/2018-05-15-iOS-dev-QA/" rel="prev" title="iOS开发过程中遇到的问题及解决方案">
+      <i class="fa fa-chevron-left"></i> iOS开发过程中遇到的问题及解决方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/09/10/2018-09-10-Web-Image-Orientation/" rel="next" title="web上传图片方向纠正">
+      web上传图片方向纠正 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HKHandle-h-文件，定义几个常用的接口："><span class="nav-number">1.</span> <span class="nav-text">HKHandle.h 文件，定义几个常用的接口：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HKHandle-m文件，接口的具体实现："><span class="nav-number">2.</span> <span class="nav-text">HKHandle.m文件，接口的具体实现：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
