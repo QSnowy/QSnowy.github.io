@@ -1,0 +1,40 @@
+# 指定语言环境
+language: node_js
+# 指定是否需要sudo权限
+sudo: false
+# 指定node_js版本
+node_js:
+  - 10.0
+# 指定缓存模块，可选，加快编译速度
+cache: npm
+# 指定博客源码分支
+branches:
+  only:
+    - hexo
+
+before_install:
+  - npm install -g hexo-cli
+
+# Start: build
+install:
+  - npm install
+  - npm install hexo-deployer-git --save
+
+# 清除之前缓存，生成新网站资源
+script:
+  - hexo clean
+  - hexo generate
+
+# 部署
+#after_script:
+ # - sed -i "s/gh_token/${GH_TOKEN}/g" ./_config.yml
+ # - hexo deploy
+deploy:
+  provider: pages
+  github-token: $GH_TOKEN
+  keep-history: ture
+  on:
+    branch: hexo
+  local-dir: public
+# End: build
+
