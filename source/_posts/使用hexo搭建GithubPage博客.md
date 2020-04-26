@@ -55,7 +55,7 @@ npm install hexo-deployer-git --save
 
 设置一下站点配置文件`_config.yml`
 
-```javascript
+```yaml
 deploy:
   type: git
   repository: 'your repository address' # 自己的GitHub仓库地址
@@ -75,5 +75,45 @@ hexo deploy
 
 ### 利用Travis自动部署
 
-还想更简单吗，只用push文章到GitHub，然后自动部署到GitHubPages？
+还想更简单吗，只用push文章到GitHub，然后自动部署到GitHubPages？利用 [Travis](https://travis-ci.org/) 就可以实现。
+
+使用GitHub账号登陆Travis， 在 [GitHubApplications](https://github.com/settings/applications) 能看到被授权的Travis应用。
+
+然后在 [GithubInstallActions](https://github.com/settings/installations) 配置一下Travis可以访问的博客仓库。
+
+然后在 [GitHubSetting](https://github.com/settings/tokens) 生成一个token，将这个token复制下来，回到 [Travis](https://travis-ci.com/getting_started) 中，在仓库 `<yourname>.github.io` 配置一下`Environment Variables`，添加下面一行键值对
+
+![ghtoken](/images/Travis_GH_TOKEN.png)
+
+在博客目录下，新建一个自动编译配置文件`.travis.yml`，注意目前GitHubPages的默认的站点分支是master，无法指定gh-pages了。
+
+```yaml
+# 指定语言环境
+language: node_js
+# 指定是否需要sudo权限
+sudo: false
+# 指定node_js版本
+node_js:
+  - 10.0
+# 指定缓存模块，可选，加快编译速度
+cache: npm
+# 指定博客源码分支
+branches:
+  only:
+    - hexo
+# 清除之前缓存，生成新网站资源
+script:
+  - hexo clean
+  - hexo generate
+# 部署
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    all_branches: true # solve a permission problem
+  target_branch: master
+  local-dir: public
+```
 

@@ -11,19 +11,10 @@ cache: npm
 branches:
   only:
     - hexo
-
-before_install:
-  - npm install -g hexo-cli
-
-install:
-  - npm install
-  - npm install hexo-deployer-git --save
-
 # 清除之前缓存，生成新网站资源
 script:
   - hexo clean
   - hexo generate
-
 # 部署
 deploy:
   provider: pages
@@ -34,4 +25,3 @@ deploy:
     all_branches: true # solve a permission problem
   target_branch: master
   local-dir: public
-

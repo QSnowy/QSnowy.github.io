@@ -346,5 +346,5 @@ xcodebuild需要调用Xcode去执行命令，但是xcode-select指向的路径�
 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 ```
 
-[image-1]:	/assets/images/stripe.png
-[image-2]:	/assets/images/navi_line.png
+[image-1]:	/images/stripe.png
+[image-2]:	/images/navi_line.png

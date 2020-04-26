@@ -10,7 +10,7 @@ tags: iOS Web
 随后发现在PC端用`<img>`展示的时候，图片发生了偏转。
 
 具体大概是这个样子的，客户吐槽：多年的颈椎病都被治好了。
-![](/assets/images/webImageOrientation6.png)
+![](/images/webImageOrientation6.png)
 
 因为只有通过iOS客户端上传的图片才会偏转，所以问了负责Android客户端的同学，原来Android的webView在文件上传前有回调，在回调里面对图片方向进行了处理。
 

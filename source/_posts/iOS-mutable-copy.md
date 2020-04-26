@@ -62,7 +62,7 @@ tags: iOS 深浅拷贝
 - 完全复制(real-deep copy)：在完全复制操作时，对于被复制对象的每一层都是对象复制。
 
 来自苹果官方的解释图例：[官方链接](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Collections/Articles/Copying.html "官方链接")
-![](/assets/images/CopyingCollections.png)
+![](/images/CopyingCollections.png)
 
 集合的深浅拷贝示例代码：
 

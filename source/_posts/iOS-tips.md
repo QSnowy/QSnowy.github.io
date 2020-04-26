@@ -46,8 +46,21 @@ navigationController.hidesBarsOnSwipe = YES;
 
 ### 拉伸图片的时候怎么才能让图片不变形
 
-```swift
-UIImage *image = [[UIImage imageNamed:@"xxx"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+
+先看一下图片的拉伸图解：
+
+![image](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/imageStretch.png?Expires=1587888481&OSSAccessKeyId=TMP.3KeKGHpHaYVgGCDmzvnzdhhx2jZheMavaKAxaxhg19MXPitkdUoJt73TeviHcpoMuwj3ytADxx7k5RZrP9ugwNNK8uA2vm&Signature=hxyd%2Fd9Q34SPlnawM4ErolVcwPI%3D)
+
+```objective-c
+
+// 低于iOS 5.0
+
+- (UIImage *)stretchableImageWithLeftCapWidth:(NSInteger)leftCapWidth topCapHeight:(NSInteger)topCapHeight
+
+// 高于iOS 5.0
+
+- (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets;
+
 ```
 
 ### 把tableview里cell的小对勾的颜色改成别的颜色
@@ -209,13 +222,7 @@ tableview.estimatedSectionFooterHeight = 0;
         } 
 }
 ```
-### 图片不变形拉伸
-```Swift
-// 低于iOS 5.0
-- (UIImage *)stretchableImageWithLeftCapWidth:(NSInteger)leftCapWidth topCapHeight:(NSInteger)topCapHeight
-// 高于iOS 5.0
-- (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets
-```
+
 ### 优雅地退出App
 ```Swift
 // 暴力强退，不会调用applicationWillTerminate，会被拒绝
