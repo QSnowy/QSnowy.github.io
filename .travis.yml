@@ -15,7 +15,6 @@ branches:
 before_install:
   - npm install -g hexo-cli
 
-# Start: build
 install:
   - npm install
   - npm install hexo-deployer-git --save
@@ -26,15 +25,13 @@ script:
   - hexo generate
 
 # 部署
-#after_script:
- # - sed -i "s/gh_token/${GH_TOKEN}/g" ./_config.yml
- # - hexo deploy
 deploy:
   provider: pages
+  skip-cleanup: true
   github-token: $GH_TOKEN
-  keep-history: ture
+  keep-history: true
   on:
-    branch: hexo
+    all_branches: true # solve a permission problem
+  target_branch: master
   local-dir: public
-# End: build
 
