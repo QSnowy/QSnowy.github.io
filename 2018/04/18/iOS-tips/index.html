@@ -17,21 +17,23 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="本文持续更新，主要记录自己在iOS开发过程中用到的一些小技巧，助力快速开发 UIButton动态设置文字出现闪烁Button type不要使用system，要用custom tableView除掉多余空白行：1tableView.tableFooterView &#x3D; [UIView new];  自定义leftBarButtonItem导致左滑返回手势失效12self.navigationItem.">
+  <meta name="description" content="本文持续更新，主要记录自己在iOS开发过程中用到的一些小技巧，助力快速开发 UIButton动态设置文字出现闪烁Button type不要使用system，要用custom tableView去掉底部空白行：1tableView.tableFooterView &#x3D; [UIView new];">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS开发小技巧">
 <meta property="og:url" content="http://yoursite.com/2018/04/18/iOS-tips/index.html">
 <meta property="og:site_name" content="QSnowy">
-<meta property="og:description" content="本文持续更新，主要记录自己在iOS开发过程中用到的一些小技巧，助力快速开发 UIButton动态设置文字出现闪烁Button type不要使用system，要用custom tableView除掉多余空白行：1tableView.tableFooterView &#x3D; [UIView new];  自定义leftBarButtonItem导致左滑返回手势失效12self.navigationItem.">
+<meta property="og:description" content="本文持续更新，主要记录自己在iOS开发过程中用到的一些小技巧，助力快速开发 UIButton动态设置文字出现闪烁Button type不要使用system，要用custom tableView去掉底部空白行：1tableView.tableFooterView &#x3D; [UIView new];">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/imageStretch.png?Expires=1587888481&OSSAccessKeyId=TMP.3KeKGHpHaYVgGCDmzvnzdhhx2jZheMavaKAxaxhg19MXPitkdUoJt73TeviHcpoMuwj3ytADxx7k5RZrP9ugwNNK8uA2vm&Signature=hxyd%252Fd9Q34SPlnawM4ErolVcwPI%253D">
 <meta property="article:published_time" content="2018-04-18T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-26T09:51:32.880Z">
+<meta property="article:modified_time" content="2020-04-26T15:10:34.070Z">
 <meta property="article:author" content="QSnowy">
-<meta property="article:tag" content="iOS 小技巧 经验之谈">
+<meta property="article:tag" content="经验之谈">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="小技巧">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/imageStretch.png?Expires=1587888481&OSSAccessKeyId=TMP.3KeKGHpHaYVgGCDmzvnzdhhx2jZheMavaKAxaxhg19MXPitkdUoJt73TeviHcpoMuwj3ytADxx7k5RZrP9ugwNNK8uA2vm&Signature=hxyd%252Fd9Q34SPlnawM4ErolVcwPI%253D">
 
@@ -121,6 +123,21 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -159,7 +176,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="QSnowy">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="坚持分享、坚持写作">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -184,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-26 09:51:32" itemprop="dateModified" datetime="2020-04-26T09:51:32+00:00">2020-04-26</time>
+                <time title="修改时间：2020-04-26 15:10:34" itemprop="dateModified" datetime="2020-04-26T15:10:34+00:00">2020-04-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,6 +214,13 @@
             </span>
 
           
+            <span id="/2018/04/18/iOS-tips/" class="post-meta-item leancloud_visitors" data-flag-title="iOS开发小技巧" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
 
         </div>
       </header>
@@ -209,7 +233,9 @@
       
         <p>本文持续更新，主要记录自己在iOS开发过程中用到的一些小技巧，助力快速开发</p>
 <h3 id="UIButton动态设置文字出现闪烁"><a href="#UIButton动态设置文字出现闪烁" class="headerlink" title="UIButton动态设置文字出现闪烁"></a>UIButton动态设置文字出现闪烁</h3><p>Button type不要使用system，要用custom</p>
-<h3 id="tableView除掉多余空白行："><a href="#tableView除掉多余空白行：" class="headerlink" title="tableView除掉多余空白行："></a>tableView除掉多余空白行：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tableView.tableFooterView = [<span class="type">UIView</span> new];</span><br></pre></td></tr></table></figure>
+<h3 id="tableView去掉底部空白行："><a href="#tableView去掉底部空白行：" class="headerlink" title="tableView去掉底部空白行："></a>tableView去掉底部空白行：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tableView.tableFooterView = [<span class="type">UIView</span> new];</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h3 id="自定义leftBarButtonItem导致左滑返回手势失效"><a href="#自定义leftBarButtonItem导致左滑返回手势失效" class="headerlink" title="自定义leftBarButtonItem导致左滑返回手势失效"></a>自定义leftBarButtonItem导致左滑返回手势失效</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.navigationItem.leftBarButtonItem = [[<span class="type">UIBarButtonItem</span> alloc] initWithImage:img style:<span class="type">UIBarButtonItemStylePlain</span> target:<span class="keyword">self</span> action:@selector(onBack:)];</span><br><span class="line"><span class="keyword">self</span>.navigationController.interactivePopGestureRecognizer.delegate = (id &lt;<span class="type">UIGestureRecognizerDelegate</span>&gt; )<span class="keyword">self</span>;</span><br></pre></td></tr></table></figure>
 
@@ -277,7 +303,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/iOS-%E5%B0%8F%E6%8A%80%E5%B7%A7-%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/" rel="tag"># iOS 小技巧 经验之谈</a>
+              <a href="/tags/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/" rel="tag"># 经验之谈</a>
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="tag"># 小技巧</a>
           </div>
 
         
@@ -305,6 +333,13 @@
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -351,7 +386,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UIButton动态设置文字出现闪烁"><span class="nav-number">1.</span> <span class="nav-text">UIButton动态设置文字出现闪烁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tableView除掉多余空白行："><span class="nav-number">2.</span> <span class="nav-text">tableView除掉多余空白行：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义leftBarButtonItem导致左滑返回手势失效"><span class="nav-number">3.</span> <span class="nav-text">自定义leftBarButtonItem导致左滑返回手势失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewController中的scrollView出现莫名的frame位移或者contentOffset有偏差"><span class="nav-number">4.</span> <span class="nav-text">ViewController中的scrollView出现莫名的frame位移或者contentOffset有偏差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面滚动时，隐藏navigationbar"><span class="nav-number">5.</span> <span class="nav-text">页面滚动时，隐藏navigationbar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉伸图片的时候怎么才能让图片不变形"><span class="nav-number">6.</span> <span class="nav-text">拉伸图片的时候怎么才能让图片不变形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把tableview里cell的小对勾的颜色改成别的颜色"><span class="nav-number">7.</span> <span class="nav-text">把tableview里cell的小对勾的颜色改成别的颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Navigationbar弄成透明的而不是带模糊的效果"><span class="nav-number">8.</span> <span class="nav-text">Navigationbar弄成透明的而不是带模糊的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变UITextField-placeholder的颜色和位置"><span class="nav-number">9.</span> <span class="nav-text">改变UITextField placeholder的颜色和位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义NavigationBar的titleView"><span class="nav-number">10.</span> <span class="nav-text">自定义NavigationBar的titleView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIScorllView-ContentSize-通过添加Masonry-layout约束确定尺寸"><span class="nav-number">11.</span> <span class="nav-text">UIScorllView ContentSize 通过添加Masonry layout约束确定尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView-获取HTML的title"><span class="nav-number">12.</span> <span class="nav-text">WebView 获取HTML的title</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听UITextField内容变化"><span class="nav-number">13.</span> <span class="nav-text">监听UITextField内容变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animation改变constraint"><span class="nav-number">14.</span> <span class="nav-text">Animation改变constraint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不通过Xcode打包ipa"><span class="nav-number">15.</span> <span class="nav-text">不通过Xcode打包ipa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XCode使用自定义字体"><span class="nav-number">16.</span> <span class="nav-text">XCode使用自定义字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-忽略一些废除接口警告"><span class="nav-number">17.</span> <span class="nav-text">Xcode 忽略一些废除接口警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TableView-点击空白收起键盘"><span class="nav-number">18.</span> <span class="nav-text">TableView 点击空白收起键盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-标记"><span class="nav-number">19.</span> <span class="nav-text">Xcode 标记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-11-tableView-刷新跳动"><span class="nav-number">20.</span> <span class="nav-text">iOS 11 tableView 刷新跳动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-添加预编译文件"><span class="nav-number">21.</span> <span class="nav-text">Xcode 添加预编译文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS状态栏样式设置"><span class="nav-number">22.</span> <span class="nav-text">iOS状态栏样式设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优雅地退出App"><span class="nav-number">23.</span> <span class="nav-text">优雅地退出App</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NavigationBarItem间距调整"><span class="nav-number">24.</span> <span class="nav-text">NavigationBarItem间距调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XCode日志老是输出The-connection-to-service-named-com-apple-commcenter-coretelephony-xpc-was-invalidated"><span class="nav-number">25.</span> <span class="nav-text">XCode日志老是输出The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS中获取WIFI的SSID-名字-，非私有方法"><span class="nav-number">26.</span> <span class="nav-text">iOS中获取WIFI的SSID(名字)，非私有方法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UIButton动态设置文字出现闪烁"><span class="nav-number">1.</span> <span class="nav-text">UIButton动态设置文字出现闪烁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tableView去掉底部空白行："><span class="nav-number">2.</span> <span class="nav-text">tableView去掉底部空白行：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义leftBarButtonItem导致左滑返回手势失效"><span class="nav-number">3.</span> <span class="nav-text">自定义leftBarButtonItem导致左滑返回手势失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewController中的scrollView出现莫名的frame位移或者contentOffset有偏差"><span class="nav-number">4.</span> <span class="nav-text">ViewController中的scrollView出现莫名的frame位移或者contentOffset有偏差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面滚动时，隐藏navigationbar"><span class="nav-number">5.</span> <span class="nav-text">页面滚动时，隐藏navigationbar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉伸图片的时候怎么才能让图片不变形"><span class="nav-number">6.</span> <span class="nav-text">拉伸图片的时候怎么才能让图片不变形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把tableview里cell的小对勾的颜色改成别的颜色"><span class="nav-number">7.</span> <span class="nav-text">把tableview里cell的小对勾的颜色改成别的颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Navigationbar弄成透明的而不是带模糊的效果"><span class="nav-number">8.</span> <span class="nav-text">Navigationbar弄成透明的而不是带模糊的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变UITextField-placeholder的颜色和位置"><span class="nav-number">9.</span> <span class="nav-text">改变UITextField placeholder的颜色和位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义NavigationBar的titleView"><span class="nav-number">10.</span> <span class="nav-text">自定义NavigationBar的titleView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIScorllView-ContentSize-通过添加Masonry-layout约束确定尺寸"><span class="nav-number">11.</span> <span class="nav-text">UIScorllView ContentSize 通过添加Masonry layout约束确定尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView-获取HTML的title"><span class="nav-number">12.</span> <span class="nav-text">WebView 获取HTML的title</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听UITextField内容变化"><span class="nav-number">13.</span> <span class="nav-text">监听UITextField内容变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animation改变constraint"><span class="nav-number">14.</span> <span class="nav-text">Animation改变constraint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不通过Xcode打包ipa"><span class="nav-number">15.</span> <span class="nav-text">不通过Xcode打包ipa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XCode使用自定义字体"><span class="nav-number">16.</span> <span class="nav-text">XCode使用自定义字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-忽略一些废除接口警告"><span class="nav-number">17.</span> <span class="nav-text">Xcode 忽略一些废除接口警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TableView-点击空白收起键盘"><span class="nav-number">18.</span> <span class="nav-text">TableView 点击空白收起键盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-标记"><span class="nav-number">19.</span> <span class="nav-text">Xcode 标记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-11-tableView-刷新跳动"><span class="nav-number">20.</span> <span class="nav-text">iOS 11 tableView 刷新跳动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-添加预编译文件"><span class="nav-number">21.</span> <span class="nav-text">Xcode 添加预编译文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS状态栏样式设置"><span class="nav-number">22.</span> <span class="nav-text">iOS状态栏样式设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优雅地退出App"><span class="nav-number">23.</span> <span class="nav-text">优雅地退出App</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NavigationBarItem间距调整"><span class="nav-number">24.</span> <span class="nav-text">NavigationBarItem间距调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XCode日志老是输出The-connection-to-service-named-com-apple-commcenter-coretelephony-xpc-was-invalidated"><span class="nav-number">25.</span> <span class="nav-text">XCode日志老是输出The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS中获取WIFI的SSID-名字-，非私有方法"><span class="nav-number">26.</span> <span class="nav-text">iOS中获取WIFI的SSID(名字)，非私有方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -360,7 +395,7 @@
     <img class="site-author-image" itemprop="image" alt="QSnowy"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">QSnowy</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">坚持分享、坚持写作</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -372,15 +407,27 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span>
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QSnowy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QSnowy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:736246606@qq.com" title="E-Mail → mailto:736246606@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -409,7 +456,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">QSnowy</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         
@@ -419,6 +466,92 @@
 
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"2WRSHybBJ4zftmUIjs1Y6IbJ-gzGzoHsz","app_key":"Drp0ySgqmVYgH718GTmu1slA","server_url":"https://2wrshybb.lc-cn-n1-shared.com","security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
       </div>
@@ -435,7 +568,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
@@ -462,6 +595,27 @@
   
 
   
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2018/04/18/iOS-tips/";
+    this.page.identifier = "2018/04/18/iOS-tips/";
+    this.page.title = "iOS开发小技巧";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://qsnowy-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
 
 </body>
 </html>

@@ -17,22 +17,24 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。 SVN无法上传.a文件Xcode自带的svn和Versions以及一些其它工具都有默认忽略.a文件。 在Versions中手动添加文件：选择Versions的菜单View–&gt;Show Ignored Items，这样就会显示出ignored的文件，找到你要上传的.a文件，右键Add就可以了。 Xcode unab">
+  <meta name="description" content="记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS开发过程中遇到的问题及解决方案">
 <meta property="og:url" content="http://yoursite.com/2018/05/15/dev-QA/index.html">
 <meta property="og:site_name" content="QSnowy">
-<meta property="og:description" content="记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。 SVN无法上传.a文件Xcode自带的svn和Versions以及一些其它工具都有默认忽略.a文件。 在Versions中手动添加文件：选择Versions的菜单View–&gt;Show Ignored Items，这样就会显示出ignored的文件，找到你要上传的.a文件，右键Add就可以了。 Xcode unab">
+<meta property="og:description" content="记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/stripe.png">
 <meta property="og:image" content="http://yoursite.com/images/navi_line.png">
 <meta property="article:published_time" content="2018-05-15T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-26T09:51:32.880Z">
+<meta property="article:modified_time" content="2020-04-26T15:10:34.070Z">
 <meta property="article:author" content="QSnowy">
-<meta property="article:tag" content="iOS 小技巧 经验之谈">
+<meta property="article:tag" content="经验之谈">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="小技巧">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/stripe.png">
 
@@ -122,6 +124,21 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -160,7 +177,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="QSnowy">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="坚持分享、坚持写作">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -185,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-26 09:51:32" itemprop="dateModified" datetime="2020-04-26T09:51:32+00:00">2020-04-26</time>
+                <time title="修改时间：2020-04-26 15:10:34" itemprop="dateModified" datetime="2020-04-26T15:10:34+00:00">2020-04-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -198,6 +215,13 @@
             </span>
 
           
+            <span id="/2018/05/15/dev-QA/" class="post-meta-item leancloud_visitors" data-flag-title="iOS开发过程中遇到的问题及解决方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
 
         </div>
       </header>
@@ -209,6 +233,9 @@
 
       
         <p>记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。</p>
+<a id="more"></a>
+
+
 <h3 id="SVN无法上传-a文件"><a href="#SVN无法上传-a文件" class="headerlink" title="SVN无法上传.a文件"></a>SVN无法上传.a文件</h3><p>Xcode自带的svn和Versions以及一些其它工具都有默认忽略<code>.a</code>文件。</p>
 <p>在Versions中手动添加文件：<br>选择Versions的菜单View–&gt;Show Ignored Items，这样就会显示出ignored的文件，找到你要上传的<code>.a</code>文件，右键<code>Add</code>就可以了。</p>
 <h3 id="Xcode-unable-to-run-app-in-simulator"><a href="#Xcode-unable-to-run-app-in-simulator" class="headerlink" title="Xcode unable to run app in simulator"></a>Xcode unable to run app in simulator</h3><p>Xcode 界面，<code>shift + command +2</code> 快速进入<code>devices</code>窗口，查看当前的可用设备，找到无法启动的模拟器，删除并重新创建一个新的模拟器，再次运行该模拟器即可</p>
@@ -221,12 +248,12 @@
 <ul>
 <li>方案一：</li>
 </ul>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">CATransaction</span> begin];</span><br><span class="line">[<span class="type">CATransaction</span> setCompletionBlock: ^&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//animation 结束之后要运行的代码 </span></span><br><span class="line"></span><br><span class="line">&#125;]; </span><br><span class="line">[_tblView setEditing:<span class="type">YES</span> animated:<span class="type">YES</span>]; </span><br><span class="line">[<span class="type">CATransaction</span> commit];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[CATransaction begin];</span><br><span class="line">[CATransaction setCompletionBlock: ^&#123;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;animation 结束之后要运行的代码 </span><br><span class="line"></span><br><span class="line">&#125;]; </span><br><span class="line">[_tblView setEditing:YES animated:YES]; </span><br><span class="line">[CATransaction commit];</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>方案二：</li>
 </ul>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">UIView</span> animateWithDuration:<span class="number">0</span>.3f</span><br><span class="line">                 animations:^&#123;</span><br><span class="line">                    [<span class="keyword">self</span>.tableView setEditing:<span class="type">YES</span> animated:<span class="type">NO</span>];</span><br><span class="line">                 &#125;</span><br><span class="line">                 completion:^(<span class="type">BOOL</span> finished)&#123;</span><br><span class="line">                   <span class="comment">// animation 结束之后要运行的代码</span></span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:0.3f</span><br><span class="line">                 animations:^&#123;</span><br><span class="line">                    [self.tableView setEditing:YES animated:NO];</span><br><span class="line">                 &#125;</span><br><span class="line">                 completion:^(BOOL finished)&#123;</span><br><span class="line">                   &#x2F;&#x2F; animation 结束之后要运行的代码</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 
 
 
@@ -240,49 +267,49 @@
 <p>1.删除xib的 source code 里的冲突</p>
 <p>2.右键.xib文件 -&gt; show file in inspector 文件type：default interface builder cocoa touch xib  (Xcode 7 点击一次ok)</p>
 <h3 id="AVC的View自动加载AView的nib文件"><a href="#AVC的View自动加载AView的nib文件" class="headerlink" title="AVC的View自动加载AView的nib文件"></a>AVC的View自动加载AView的nib文件</h3><p>实例：iOS 10.3.3真机<br>工程中以前有一个名为RewardView的View源文件以及相应的nib文件，再新建一个RewardViewController的源文件不带nib文件，当RewardViewController初始化时，竟然把RewardView的nib文件加载进来啦啦啦，我也是无言以对，难道VC的View加载机制是优先加载命名类似的nib文件？？？</p>
-<h3 id="用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误"><a href="#用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误" class="headerlink" title="用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误"></a>用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">post_install <span class="keyword">do</span> |installer| </span><br><span class="line">    installer.pods_project.targets.each <span class="keyword">do</span> |target| </span><br><span class="line">        target.build_configurations.each <span class="keyword">do</span> |config| </span><br><span class="line">            config.build_settings['<span class="type">IPHONEOS_DEPLOYMENT_TARGET'</span>] = '<span class="number">8.0</span>' </span><br><span class="line">        end </span><br><span class="line">    end </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误"><a href="#用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误" class="headerlink" title="用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误"></a>用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">post_install do |installer| </span><br><span class="line">    installer.pods_project.targets.each do |target| </span><br><span class="line">        target.build_configurations.each do |config| </span><br><span class="line">            config.build_settings[&#39;IPHONEOS_DEPLOYMENT_TARGET&#39;] &#x3D; &#39;8.0&#39; </span><br><span class="line">        end </span><br><span class="line">    end </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <p>将上面的代码中的<code>8.0</code>替换成你要的系统版本号后，粘贴在<code>podfile</code>文件后面，执行<code>pod update</code> 或者 <code>pod install</code> 即可。</p>
 <h4 id="iOS11tableView-cell-分割线问题"><a href="#iOS11tableView-cell-分割线问题" class="headerlink" title="iOS11tableView cell 分割线问题"></a>iOS11tableView cell 分割线问题</h4><p>没有通过nib加载的cell，都会出现系统的分割线，通过nib加载的cell不会出现分割线</p>
-<h3 id="pods的第三方库有好多Warning"><a href="#pods的第三方库有好多Warning" class="headerlink" title="pods的第三方库有好多Warning"></a>pods的第三方库有好多Warning</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod '<span class="type">SSZipArchive'</span>, :inhibit_warnings =&gt; <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="pods的第三方库有好多Warning"><a href="#pods的第三方库有好多Warning" class="headerlink" title="pods的第三方库有好多Warning"></a>pods的第三方库有好多Warning</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &#39;SSZipArchive&#39;, :inhibit_warnings &#x3D;&gt; true</span><br></pre></td></tr></table></figure>
 
 <h3 id="自定义tabBarController的tabBar的title显示问题"><a href="#自定义tabBarController的tabBar的title显示问题" class="headerlink" title="自定义tabBarController的tabBar的title显示问题"></a>自定义tabBarController的tabBar的title显示问题</h3><p>自定义tabBar的title跟系统的title重影，不要直接设置<code>vc.title=@“”</code>，要设置<code>vc.navigationItem.title=@“”</code></p>
 <h3 id="App想用http怎么办"><a href="#App想用http怎么办" class="headerlink" title="App想用http怎么办"></a>App想用http怎么办</h3><p>新版xcode已经默认项目使用HTTPS，想要用回http，只需在<code>info.plist</code> 添加key：<code>NSAppTransportSecurity</code> value:<code>Dictionary</code>，在<code>dictionary</code>下面添加<code>NSAllowsArbitraryLoads=YES</code>的键值对即可</p>
 <h3 id="Xcode-8默认打印了一堆无用的log，怎么办？"><a href="#Xcode-8默认打印了一堆无用的log，怎么办？" class="headerlink" title="Xcode 8默认打印了一堆无用的log，怎么办？"></a>Xcode 8默认打印了一堆无用的log，怎么办？</h3><p>在Xcode选项中依次选择 Product -&gt; Scheme -&gt; Edit Scheme，调出工程Scheme编辑面板；或者使用快捷键 <code>Shift+Command+,</code> 调出Scheme编辑面板。</p>
 <p>选中Run选项，在<code>Environment Variables</code>里面添加 <code>OS_ACTIVITY_MODE=Disable</code>，即可告别多余的日志信息。</p>
 <p>但是真机调试的话，NSLog日志并不会出现，那我们就只用宏定义代替：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define <span class="type">CCLog</span>(...) printf(<span class="string">"%f %s\n"</span>,[[<span class="type">NSDate</span> date] timeIntervalSince1970],[[<span class="type">NSString</span> stringWithFormat:__VA_ARGS__] <span class="type">UTF8String</span>]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define CCLog(...) printf(&quot;%f %s\n&quot;,[[NSDate date] timeIntervalSince1970],[[NSString stringWithFormat:__VA_ARGS__] UTF8String]);</span><br></pre></td></tr></table></figure>
 
-<h3 id="tableView-Cell分割线位置"><a href="#tableView-Cell分割线位置" class="headerlink" title="tableView Cell分割线位置"></a>tableView Cell分割线位置</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(<span class="type">UITableView</span> *)tableView willDisplayCell:(<span class="type">UITableViewCell</span> *)cell forRowAtIndexPath:(<span class="type">NSIndexPath</span> *)indexPath&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Remove separator inset</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:@selector(setSeparatorInset:)]) &#123;</span><br><span class="line">        [cell setSeparatorInset:<span class="type">UIEdgeInsetsMake</span>(<span class="number">0</span>, tableView.frame.size.width, <span class="number">0</span>, <span class="number">0</span>)];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Prevent the cell from inheriting the Table View's margin settings</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setPreservesSuperviewLayoutMargins:<span class="type">NO</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Explictly set your cell's layout margins</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:@selector(setLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setLayoutMargins:<span class="type">UIEdgeInsetsMake</span>(<span class="number">0</span>, tableView.frame.size.width, <span class="number">0</span>, <span class="number">0</span>)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="tableView-Cell分割线位置"><a href="#tableView-Cell分割线位置" class="headerlink" title="tableView Cell分割线位置"></a>tableView Cell分割线位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath&#123;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Remove separator inset</span><br><span class="line">    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) &#123;</span><br><span class="line">        [cell setSeparatorInset:UIEdgeInsetsMake(0, tableView.frame.size.width, 0, 0)];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Prevent the cell from inheriting the Table View&#39;s margin settings</span><br><span class="line">    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setPreservesSuperviewLayoutMargins:NO];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Explictly set your cell&#39;s layout margins</span><br><span class="line">    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setLayoutMargins:UIEdgeInsetsMake(0, tableView.frame.size.width, 0, 0)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h3 id="如何实现斜纹背景"><a href="#如何实现斜纹背景" class="headerlink" title="如何实现斜纹背景"></a>如何实现斜纹背景</h3><p>项目中需要实现这样的效果：<br><img src="/images/stripe.png" alt=""></p>
 <p>每个半小时区间需要斜纹背景填充，可以用UIView或者CALayer实现。<br>UIView实现：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"> - (void)drawRect:(<span class="type">CGRect</span>)rect &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取当前context</span></span><br><span class="line">    <span class="type">CGFloat</span> width = <span class="keyword">self</span>.frame.size.width;</span><br><span class="line">    <span class="type">CGFloat</span> height = <span class="keyword">self</span>.frame.size.height;</span><br><span class="line">    <span class="type">CGContextRef</span> ctx = <span class="type">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 画矩形，填充背景色</span></span><br><span class="line">    <span class="type">CGContextAddRect</span>(ctx, <span class="type">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height));</span><br><span class="line">    [[<span class="type">UIColor</span> colorWithHex:@<span class="string">"#e9e9e9"</span>] <span class="keyword">set</span>];</span><br><span class="line">    <span class="type">CGContextFillPath</span>(ctx);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 画斜纹线条</span></span><br><span class="line">    <span class="type">CGFloat</span> offset = <span class="number">50</span>;</span><br><span class="line">    [[<span class="type">UIColor</span> colorWithHex:@<span class="string">"#dadada"</span>] <span class="keyword">set</span>];</span><br><span class="line">    <span class="type">NSInteger</span> <span class="built_in">count</span> = ceilf((width + offset) * <span class="number">1</span>.0f / <span class="number">5.0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="type">NSMutableArray</span> *startPoints = [<span class="type">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        <span class="type">CGPoint</span> startPoint = <span class="type">CGPointMake</span>(<span class="number">5</span> * i - offset, height);</span><br><span class="line">        <span class="type">NSValue</span> *value = [<span class="type">NSValue</span> valueWithCGPoint:startPoint];</span><br><span class="line">        [startPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">NSMutableArray</span> *endPoints = [<span class="type">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        <span class="type">CGPoint</span> endPoint = <span class="type">CGPointMake</span>(<span class="number">5</span> * i, <span class="number">0</span>);</span><br><span class="line">        <span class="type">NSValue</span> *value = [<span class="type">NSValue</span> valueWithCGPoint:endPoint];</span><br><span class="line">        [endPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; startPoints.<span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">CGPoint</span> startPoint = [[startPoints objectAtIndex:i] <span class="type">CGPointValue</span>];</span><br><span class="line">        <span class="type">CGPoint</span> endPoint = [[endPoints objectAtIndex:i] <span class="type">CGPointValue</span>];</span><br><span class="line">        <span class="type">CGContextMoveToPoint</span>(ctx, startPoint.x, startPoint.y);</span><br><span class="line">        <span class="type">CGContextAddLineToPoint</span>(ctx, endPoint.x, endPoint.y);</span><br><span class="line">        <span class="type">CGContextStrokePath</span>(ctx);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"> - (void)drawRect:(CGRect)rect &#123;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 获取当前context</span><br><span class="line">    CGFloat width &#x3D; self.frame.size.width;</span><br><span class="line">    CGFloat height &#x3D; self.frame.size.height;</span><br><span class="line">    CGContextRef ctx &#x3D; UIGraphicsGetCurrentContext();</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 画矩形，填充背景色</span><br><span class="line">    CGContextAddRect(ctx, CGRectMake(0, 0, width, height));</span><br><span class="line">    [[UIColor colorWithHex:@&quot;#e9e9e9&quot;] set];</span><br><span class="line">    CGContextFillPath(ctx);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 画斜纹线条</span><br><span class="line">    CGFloat offset &#x3D; 50;</span><br><span class="line">    [[UIColor colorWithHex:@&quot;#dadada&quot;] set];</span><br><span class="line">    NSInteger count &#x3D; ceilf((width + offset) * 1.0f &#x2F; 5.0);</span><br><span class="line">    </span><br><span class="line">    NSMutableArray *startPoints &#x3D; [NSMutableArray array];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++)&#123;</span><br><span class="line">        CGPoint startPoint &#x3D; CGPointMake(5 * i - offset, height);</span><br><span class="line">        NSValue *value &#x3D; [NSValue valueWithCGPoint:startPoint];</span><br><span class="line">        [startPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    NSMutableArray *endPoints &#x3D; [NSMutableArray array];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++)&#123;</span><br><span class="line">        CGPoint endPoint &#x3D; CGPointMake(5 * i, 0);</span><br><span class="line">        NSValue *value &#x3D; [NSValue valueWithCGPoint:endPoint];</span><br><span class="line">        [endPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    for (int i &#x3D; 0; i &lt; startPoints.count; i ++)&#123;</span><br><span class="line">        </span><br><span class="line">        CGPoint startPoint &#x3D; [[startPoints objectAtIndex:i] CGPointValue];</span><br><span class="line">        CGPoint endPoint &#x3D; [[endPoints objectAtIndex:i] CGPointValue];</span><br><span class="line">        CGContextMoveToPoint(ctx, startPoint.x, startPoint.y);</span><br><span class="line">        CGContextAddLineToPoint(ctx, endPoint.x, endPoint.y);</span><br><span class="line">        CGContextStrokePath(ctx);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>CALayer实现：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">CAShapeLayer</span> *)invalidLayerWidthFrame:(<span class="type">CGRect</span>)frame&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建CGPath</span></span><br><span class="line">    <span class="type">CGMutablePathRef</span> path = <span class="type">CGPathCreateMutable</span>();</span><br><span class="line">    <span class="comment">// 创建layer，设置layer绘制颜色</span></span><br><span class="line">    <span class="type">CAShapeLayer</span> *oneLayer = [<span class="type">CAShapeLayer</span> layer];</span><br><span class="line">    oneLayer.fillColor = [<span class="type">UIColor</span> whiteColor].<span class="type">CGColor</span>;</span><br><span class="line">    oneLayer.strokeColor = [<span class="type">UIColor</span> blueColor].<span class="type">CGColor</span>;</span><br><span class="line">    oneLayer.lineWidth = <span class="number">1</span>.0f;</span><br><span class="line">    oneLayer.masksToBounds = <span class="type">YES</span>;</span><br><span class="line">    oneLayer.frame = frame;</span><br><span class="line">    oneLayer.backgroundColor = [<span class="type">UIColor</span> lightGrayColor].<span class="type">CGColor</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 定义斜线间距、起始点与终止点X轴偏移量</span></span><br><span class="line">    <span class="type">CGFloat</span> offsetX = <span class="number">50</span>;</span><br><span class="line">    <span class="type">CGFloat</span> spaceX = <span class="number">5</span>;</span><br><span class="line">    <span class="type">NSInteger</span> <span class="built_in">count</span> = ceilf((frame.size.width + offsetX) * <span class="number">1</span>.0f / spaceX);</span><br><span class="line">    </span><br><span class="line">    <span class="type">NSMutableArray</span> *startPoints = [<span class="type">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        <span class="type">CGPoint</span> startPoint = <span class="type">CGPointMake</span>(spaceX * i - offsetX, frame.size.height);</span><br><span class="line">        <span class="type">NSValue</span> *value = [<span class="type">NSValue</span> valueWithCGPoint:startPoint];</span><br><span class="line">        [startPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">NSMutableArray</span> *endPoints = [<span class="type">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        <span class="type">CGPoint</span> endPoint = <span class="type">CGPointMake</span>(spaceX * i, <span class="number">0</span>);</span><br><span class="line">        <span class="type">NSValue</span> *value = [<span class="type">NSValue</span> valueWithCGPoint:endPoint];</span><br><span class="line">        [endPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; startPoints.<span class="built_in">count</span>; i ++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">CGPoint</span> startPoint = [[startPoints objectAtIndex:i] <span class="type">CGPointValue</span>];</span><br><span class="line">        <span class="type">CGPoint</span> endPoint = [[endPoints objectAtIndex:i] <span class="type">CGPointValue</span>];</span><br><span class="line">        <span class="type">CGPathMoveToPoint</span>(path, <span class="type">NULL</span>, startPoint.x, startPoint.y);</span><br><span class="line">        <span class="type">CGPathAddLineToPoint</span>(path, <span class="type">NULL</span>, endPoint.x, endPoint.y);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    oneLayer.path = path;</span><br><span class="line">    <span class="keyword">return</span> oneLayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (CAShapeLayer *)invalidLayerWidthFrame:(CGRect)frame&#123;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 创建CGPath</span><br><span class="line">    CGMutablePathRef path &#x3D; CGPathCreateMutable();</span><br><span class="line">    &#x2F;&#x2F; 创建layer，设置layer绘制颜色</span><br><span class="line">    CAShapeLayer *oneLayer &#x3D; [CAShapeLayer layer];</span><br><span class="line">    oneLayer.fillColor &#x3D; [UIColor whiteColor].CGColor;</span><br><span class="line">    oneLayer.strokeColor &#x3D; [UIColor blueColor].CGColor;</span><br><span class="line">    oneLayer.lineWidth &#x3D; 1.0f;</span><br><span class="line">    oneLayer.masksToBounds &#x3D; YES;</span><br><span class="line">    oneLayer.frame &#x3D; frame;</span><br><span class="line">    oneLayer.backgroundColor &#x3D; [UIColor lightGrayColor].CGColor;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 定义斜线间距、起始点与终止点X轴偏移量</span><br><span class="line">    CGFloat offsetX &#x3D; 50;</span><br><span class="line">    CGFloat spaceX &#x3D; 5;</span><br><span class="line">    NSInteger count &#x3D; ceilf((frame.size.width + offsetX) * 1.0f &#x2F; spaceX);</span><br><span class="line">    </span><br><span class="line">    NSMutableArray *startPoints &#x3D; [NSMutableArray array];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++)&#123;</span><br><span class="line">        CGPoint startPoint &#x3D; CGPointMake(spaceX * i - offsetX, frame.size.height);</span><br><span class="line">        NSValue *value &#x3D; [NSValue valueWithCGPoint:startPoint];</span><br><span class="line">        [startPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    NSMutableArray *endPoints &#x3D; [NSMutableArray array];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++)&#123;</span><br><span class="line">        CGPoint endPoint &#x3D; CGPointMake(spaceX * i, 0);</span><br><span class="line">        NSValue *value &#x3D; [NSValue valueWithCGPoint:endPoint];</span><br><span class="line">        [endPoints addObject:value];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    for (int i &#x3D; 0; i &lt; startPoints.count; i ++)&#123;</span><br><span class="line">        </span><br><span class="line">        CGPoint startPoint &#x3D; [[startPoints objectAtIndex:i] CGPointValue];</span><br><span class="line">        CGPoint endPoint &#x3D; [[endPoints objectAtIndex:i] CGPointValue];</span><br><span class="line">        CGPathMoveToPoint(path, NULL, startPoint.x, startPoint.y);</span><br><span class="line">        CGPathAddLineToPoint(path, NULL, endPoint.x, endPoint.y);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    oneLayer.path &#x3D; path;</span><br><span class="line">    return oneLayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Xcode启动图正确添加后不显示"><a href="#Xcode启动图正确添加后不显示" class="headerlink" title="Xcode启动图正确添加后不显示"></a>Xcode启动图正确添加后不显示</h3><p>先利用Assets方式添加启动图：</p>
 <p>1、在Assets.xcassets -&gt; LaunchImage图片集中添加各种分辨率启动图片</p>
 <p>2、如有<code>LaunchScreen.storyboard</code>文件，关闭Xcode General选项卡中 <code>use as Launch Screen</code>选项</p>
 <p>3、<code>General</code>选项改动，<code>Launch Images Source</code> 改为 <code>LaunchImage图片集</code>；<code>Launch Screen File</code> 置空；<br>改动后重启一下Xcode才能选择已有的启动图片集，然后删除已安装的App再运行才能看到效果😂</p>
 <h3 id="蓝牙不能自动扫描"><a href="#蓝牙不能自动扫描" class="headerlink" title="蓝牙不能自动扫描"></a>蓝牙不能自动扫描</h3><p>创建好<code>CBCentralManager</code> 后需要在<code>viewController</code> 的 <code>viewDidAppear</code>时执行扫描</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mCentralManager = [[<span class="type">CBCentralManager</span> alloc] initWithDelegate:<span class="keyword">self</span> queue:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">- (void)viewDidAppear:(<span class="type">BOOL</span>)animated&#123;</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</span><br><span class="line">    <span class="type">CBUUID</span> *serviceUUID = [<span class="type">CBUUID</span> <span class="type">UUIDWithString</span>:@<span class="string">"00001101-0000-0100-8000-00805F9B34FB"</span>];</span><br><span class="line">    <span class="type">NSArray</span> *servicesArr = [<span class="type">NSArray</span> arrayWithObjects:serviceUUID,<span class="literal">nil</span>];</span><br><span class="line">    [mCentralManager scanForPeripheralsWithServices:servicesArr options:@&#123;<span class="type">CBCentralManagerScanOptionAllowDuplicatesKey</span>:@<span class="type">NO</span>&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mCentralManager &#x3D; [[CBCentralManager alloc] initWithDelegate:self queue:nil];</span><br><span class="line"></span><br><span class="line">- (void)viewDidAppear:(BOOL)animated&#123;</span><br><span class="line">    </span><br><span class="line">    [super viewDidAppear:animated];</span><br><span class="line">    CBUUID *serviceUUID &#x3D; [CBUUID UUIDWithString:@&quot;00001101-0000-0100-8000-00805F9B34FB&quot;];</span><br><span class="line">    NSArray *servicesArr &#x3D; [NSArray arrayWithObjects:serviceUUID,nil];</span><br><span class="line">    [mCentralManager scanForPeripheralsWithServices:servicesArr options:@&#123;CBCentralManagerScanOptionAllowDuplicatesKey:@NO&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="pod-update-获取不到最新repo"><a href="#pod-update-获取不到最新repo" class="headerlink" title="pod update 获取不到最新repo"></a>pod update 获取不到最新repo</h3><p>先删除本地的repos，再setup，终端执行以下命令：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf ~/.cocoapods/repos/master</span><br><span class="line">pod setup</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf ~&#x2F;.cocoapods&#x2F;repos&#x2F;master</span><br><span class="line">pod setup</span><br></pre></td></tr></table></figure>
 
 <h3 id="iPhone-X导航栏多了一条线"><a href="#iPhone-X导航栏多了一条线" class="headerlink" title="iPhone X导航栏多了一条线"></a>iPhone X导航栏多了一条线</h3><p><img src="/images/navi_line.png" alt=""></p>
 <p>看了一下导航栏的view层级，没有发现什么高度为1的view，然后突然醒悟到，可能是导航栏背景图片尺寸的问题，换了高度为88的图片就没事了。</p>
 <h3 id="LaunchScreen加载不到图片"><a href="#LaunchScreen加载不到图片" class="headerlink" title="LaunchScreen加载不到图片"></a>LaunchScreen加载不到图片</h3><p>将需要加载的图片，转为JPEG格式的图片，或者tiff格式，具体原因不明，如果出现启动无法加载，删除APP重装，或者重启手机也可以解决</p>
 <h3 id="网络图片含有中文字符，导致sdwebimgage无法加载"><a href="#网络图片含有中文字符，导致sdwebimgage无法加载" class="headerlink" title="网络图片含有中文字符，导致sdwebimgage无法加载"></a>网络图片含有中文字符，导致sdwebimgage无法加载</h3><p>需要将URL使用utf8编码格式一下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// iOS 9 之前</span></span><br><span class="line">imgUrl = \[urlStr stringByAddingPercentEscapesUsingEncoding:<span class="type">NSUTF8StringEncoding</span>];</span><br><span class="line"><span class="comment">// iOS 9 之后</span></span><br><span class="line">imgUrl = \[urlStr stringByAddingPercentEncodingWithAllowedCharacters:\[<span class="type">NSCharacterSet</span> <span class="type">URLQueryAllowedCharacterSet</span>]];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; iOS 9 之前</span><br><span class="line">imgUrl &#x3D; [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">&#x2F;&#x2F; iOS 9 之后</span><br><span class="line">imgUrl &#x3D; [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];</span><br></pre></td></tr></table></figure>
 <h3 id="SVN-version-is-locked"><a href="#SVN-version-is-locked" class="headerlink" title="SVN version is locked"></a>SVN version is locked</h3><p>以CornerStone 为例，workingCopy，右键 -&gt; Clean</p>
 <h3 id="SVN-报错-“An-error-occurred-while-contacting-the-repository-”"><a href="#SVN-报错-“An-error-occurred-while-contacting-the-repository-”" class="headerlink" title="SVN 报错 “An error occurred while contacting the repository.”"></a>SVN 报错 “An error occurred while contacting the repository.”</h3><p>删除钥匙串中SVN相关密码，重启SVN客户端。</p>
-<h3 id="ScrollView代理scrollViewDidScroll-和scrollViewDidEndScrollingAnimation-执行了同样的业务代码，怎么防止执行多次呢？"><a href="#ScrollView代理scrollViewDidScroll-和scrollViewDidEndScrollingAnimation-执行了同样的业务代码，怎么防止执行多次呢？" class="headerlink" title="ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？"></a>ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)scrollViewDidScroll:(<span class="type">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    <span class="comment">// 去执行did end scroll animation，</span></span><br><span class="line">    [<span class="type">NSObject</span> cancelPreviousPerformRequestsWithTarget:<span class="keyword">self</span>];</span><br><span class="line">    [<span class="keyword">self</span> performSelector:@selector(scrollViewDidEndScrollingAnimation:) withObject:scrollView afterDelay:<span class="number">0.1</span>];</span><br><span class="line">&#125;</span><br><span class="line">- (void)scrollViewDidEndScrollingAnimation:(<span class="type">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    [<span class="type">NSObject</span> cancelPreviousPerformRequestsWithTarget:<span class="keyword">self</span>];</span><br><span class="line">    <span class="comment">// your code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ScrollView代理scrollViewDidScroll-和scrollViewDidEndScrollingAnimation-执行了同样的业务代码，怎么防止执行多次呢？"><a href="#ScrollView代理scrollViewDidScroll-和scrollViewDidEndScrollingAnimation-执行了同样的业务代码，怎么防止执行多次呢？" class="headerlink" title="ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？"></a>ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)scrollViewDidScroll:(UIScrollView *)scrollView &#123;</span><br><span class="line">    &#x2F;&#x2F; 去执行did end scroll animation，</span><br><span class="line">    [NSObject cancelPreviousPerformRequestsWithTarget:self];</span><br><span class="line">    [self performSelector:@selector(scrollViewDidEndScrollingAnimation:) withObject:scrollView afterDelay:0.1];</span><br><span class="line">&#125;</span><br><span class="line">- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView &#123;</span><br><span class="line">    [NSObject cancelPreviousPerformRequestsWithTarget:self];</span><br><span class="line">    &#x2F;&#x2F; your code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。"><a href="#Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。" class="headerlink" title="Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。"></a>Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。</h3><p>删掉podfile里面的use_frame!</p>
-<h3 id="webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象"><a href="#webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象" class="headerlink" title="webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象"></a>webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象</h3><p>自己主动收起键盘</p>
-<h3 id="TabBar的未选中item颜色被渲染为灰色了"><a href="#TabBar的未选中item颜色被渲染为灰色了" class="headerlink" title="TabBar的未选中item颜色被渲染为灰色了"></a>TabBar的未选中item颜色被渲染为灰色了</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用原来的渲染</span></span><br><span class="line"><span class="type">UIImage</span> *originImage = [[<span class="type">UIImage</span> imageWithName:@“”] imageWithRenderingMode:<span class="type">UIImageRenderingModeAlwaysOriginal</span>];</span><br><span class="line"><span class="type">UITabBarItem</span> *barItem = [<span class="type">UITabBarItem</span> alloc] initWithTitle:@“title” image:originImage selectedImage:selectedImage];</span><br></pre></td></tr></table></figure>
+<h3 id="webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象"><a href="#webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象" class="headerlink" title="webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象"></a>webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象</h3><p>自己的一个项目中，有一个界面展示多个webview，键盘弹出后，当屏幕发生翻转或者webview切换时，界面卡死，排查了一天，没有发现原因，结果添加了一行代码 <code>[self.view endEditing]</code> 主动收起键盘，再也没有出现该问题。</p>
+<h3 id="TabBar的未选中item颜色被渲染为灰色了"><a href="#TabBar的未选中item颜色被渲染为灰色了" class="headerlink" title="TabBar的未选中item颜色被渲染为灰色了"></a>TabBar的未选中item颜色被渲染为灰色了</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 使用原来的渲染</span><br><span class="line">UIImage *originImage &#x3D; [[UIImage imageWithName:@“”] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];</span><br><span class="line">UITabBarItem *barItem &#x3D; [UITabBarItem alloc] initWithTitle:@“title” image:originImage selectedImage:selectedImage];</span><br></pre></td></tr></table></figure>
 <h3 id="xcode-select-error-tool-‘xcodebuild’-requires-Xcode"><a href="#xcode-select-error-tool-‘xcodebuild’-requires-Xcode" class="headerlink" title="xcode-select: error: tool ‘xcodebuild’ requires Xcode"></a>xcode-select: error: tool ‘xcodebuild’ requires Xcode</h3><p>xcodebuild需要调用Xcode去执行命令，但是xcode-select指向的路径是/Library/Developer/CommandLineTools，不是Xcode路径，所以将路径切换到Xcode路径下就OK了。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</span><br></pre></td></tr></table></figure>
 
@@ -295,7 +322,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/iOS-%E5%B0%8F%E6%8A%80%E5%B7%A7-%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/" rel="tag"># iOS 小技巧 经验之谈</a>
+              <a href="/tags/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/" rel="tag"># 经验之谈</a>
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="tag"># 小技巧</a>
           </div>
 
         
@@ -323,6 +352,13 @@
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -378,7 +414,7 @@
     <img class="site-author-image" itemprop="image" alt="QSnowy"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">QSnowy</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">坚持分享、坚持写作</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -390,15 +426,27 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span>
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QSnowy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QSnowy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:736246606@qq.com" title="E-Mail → mailto:736246606@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -427,7 +475,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">QSnowy</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         
@@ -437,6 +485,92 @@
 
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"2WRSHybBJ4zftmUIjs1Y6IbJ-gzGzoHsz","app_key":"Drp0ySgqmVYgH718GTmu1slA","server_url":"https://2wrshybb.lc-cn-n1-shared.com","security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
       </div>
@@ -453,7 +587,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
@@ -480,6 +614,27 @@
   
 
   
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2018/05/15/dev-QA/";
+    this.page.identifier = "2018/05/15/dev-QA/";
+    this.page.title = "iOS开发过程中遇到的问题及解决方案";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://qsnowy-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
 
 </body>
 </html>
