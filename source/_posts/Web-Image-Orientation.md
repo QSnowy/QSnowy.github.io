@@ -3,7 +3,7 @@ layout: post
 title: web上传图片方向纠正
 date: 2018-09-10
 categories: iOS开发 web
-tags: iOS Web
+tags: [iOS, WebView]
 ---
 
 最近做的应用中有一个WKWebView加载了一个可以上传图片的网页，web端用`<input type='file'>`标签上传文件。
@@ -11,6 +11,8 @@ tags: iOS Web
 
 具体大概是这个样子的，客户吐槽：多年的颈椎病都被治好了。
 ![](/images/webImageOrientation6.png)
+
+<!-- more -->
 
 因为只有通过iOS客户端上传的图片才会偏转，所以问了负责Android客户端的同学，原来Android的webView在文件上传前有回调，在回调里面对图片方向进行了处理。
 

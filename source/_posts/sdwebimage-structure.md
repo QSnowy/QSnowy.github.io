@@ -3,10 +3,11 @@ layout: post
 title: SDWebImage代码解析
 date: 2019-03-07
 categories: iOS
-tags: iOS SDWebImage
+tags: [iOS, SDWebImage, 源码阅读]
 ---
 
 SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、加载、管理开发第三方库。
+
 
 整个源码大概分为：图片管理、下载器、下载任务、缓存、编码解码、UI展示几个模块。
 - 图片管理：SDWebImageManager
@@ -16,6 +17,8 @@ SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、�
 - 解码：SDWebImageIOCoder、SDWebImageGIFCoder
 - UI展示：UIImageView+WebCache 等
 - 配置其他：SDImageCacheConfig等
+<!-- more -->
+
 
 **先说一下，整体的图片下载流程：**
 给定一个URL给`Manager`后，会先用`Cache`检测是否有对应的缓存图片，如果没有缓存且需要下载，`Manager`持有的`Downloader`会生成一个`URLSession`，将`URL`转化为一个`Request`，然后把`Request`和`URLSession`包装在`Operation`中，将`Operation`加入到自己的`下载队列`中，开始执行下载任务；任务完成或者异常，经过`系统的Request代理`回调，拿到图片数据或异常，通过`Coder`将数据解压为图片，利用`Cache`缓存在内存和磁盘中，通过`block回调`给到主线程进行处理。

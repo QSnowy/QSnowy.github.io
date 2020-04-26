@@ -3,10 +3,12 @@ layout: post
 title: iOS开发过程中遇到的问题及解决方案
 date: 2018-05-15
 categories: iOS开发
-tags: iOS 小技巧 经验之谈
+tags: [iOS, 小技巧, 经验之谈]
 ---
 
 记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。
+<!-- more -->
+
 
 ### SVN无法上传.a文件
 
@@ -44,7 +46,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 - 方案一：
 
-```swift
+```objective-c
 [CATransaction begin];
 [CATransaction setCompletionBlock: ^{
 
@@ -57,7 +59,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 - 方案二：
 
-```swift
+```objective-c
 [UIView animateWithDuration:0.3f
                  animations:^{
                     [self.tableView setEditing:YES animated:NO];
@@ -97,7 +99,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 ### 用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误
 
-```swift
+```objective-c
 post_install do |installer| 
     installer.pods_project.targets.each do |target| 
         target.build_configurations.each do |config| 
@@ -113,7 +115,7 @@ end
 没有通过nib加载的cell，都会出现系统的分割线，通过nib加载的cell不会出现分割线
 
 ### pods的第三方库有好多Warning
-```swift
+```objective-c
 pod 'SSZipArchive', :inhibit_warnings => true
 ```
 
@@ -132,13 +134,13 @@ pod 'SSZipArchive', :inhibit_warnings => true
 选中Run选项，在`Environment Variables`里面添加 `OS_ACTIVITY_MODE=Disable`，即可告别多余的日志信息。
 
 但是真机调试的话，NSLog日志并不会出现，那我们就只用宏定义代替：
-```swift
+```objective-c
 #define CCLog(...) printf("%f %s\n",[[NSDate date] timeIntervalSince1970],[[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
 ```
 
 ### tableView Cell分割线位置
 
-```swift
+```objective-c
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     // Remove separator inset
@@ -166,7 +168,7 @@ pod 'SSZipArchive', :inhibit_warnings => true
 
 每个半小时区间需要斜纹背景填充，可以用UIView或者CALayer实现。
 UIView实现：
-```swift
+```objective-c
  - (void)drawRect:(CGRect)rect {
     
     // 获取当前context
@@ -211,7 +213,7 @@ UIView实现：
 ```
 
 CALayer实现：
-```swift
+```objective-c
 - (CAShapeLayer *)invalidLayerWidthFrame:(CGRect)frame{
     
     // 创建CGPath
@@ -272,7 +274,7 @@ CALayer实现：
 
 创建好`CBCentralManager` 后需要在`viewController` 的 `viewDidAppear`时执行扫描
 
-```swift
+```objective-c
 mCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -287,7 +289,7 @@ mCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 ### pod update 获取不到最新repo
 
 先删除本地的repos，再setup，终端执行以下命令：
-```swift
+```objective-c
 sudo rm -rf ~/.cocoapods/repos/master
 pod setup
 ```
@@ -306,18 +308,23 @@ pod setup
 
 需要将URL使用utf8编码格式一下
 
-```swift
+```objective-c
 // iOS 9 之前
-imgUrl = \[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+imgUrl = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 // iOS 9 之后
-imgUrl = \[urlStr stringByAddingPercentEncodingWithAllowedCharacters:\[NSCharacterSet URLQueryAllowedCharacterSet]];
+imgUrl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 ```
 ### SVN version is locked
+
 以CornerStone 为例，workingCopy，右键 -> Clean
+
 ### SVN 报错 "An error occurred while contacting the repository.”
+
 删除钥匙串中SVN相关密码，重启SVN客户端。
+
 ### ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？
-```swift
+
+```objective-c
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // 去执行did end scroll animation，
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -329,11 +336,15 @@ imgUrl = \[urlStr stringByAddingPercentEncodingWithAllowedCharacters:\[NSCharact
 }
 ```
 ### Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。
+
 删掉podfile里面的use_frame!
+
 ### webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象
-自己主动收起键盘
+
+自己的一个项目中，有一个界面展示多个webview，键盘弹出后，当屏幕发生翻转或者webview切换时，界面卡死，排查了一天，没有发现原因，结果添加了一行代码 `[self.view endEditing]` 主动收起键盘，再也没有出现该问题。
+
 ### TabBar的未选中item颜色被渲染为灰色了
-```swift
+```objective-c
 // 使用原来的渲染
 UIImage *originImage = [[UIImage imageWithName:@“”] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 UITabBarItem *barItem = [UITabBarItem alloc] initWithTitle:@“title” image:originImage selectedImage:selectedImage];

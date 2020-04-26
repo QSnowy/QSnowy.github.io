@@ -3,10 +3,12 @@ layout: post
 title: iOS HealthKit 接入
 date: 2018-08-15
 categories: iOS开发
-tags: iOS HealthKit
+tags: [iOS, HealthKit]
 ---
 
 HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。
+<!-- more -->
+
 
 以读取和写入健康步数为例，首先用Xcode新建一个空白项目，然后配置项目相应的选项：
 

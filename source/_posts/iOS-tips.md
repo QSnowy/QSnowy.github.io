@@ -3,7 +3,7 @@ layout: post
 title: iOS开发小技巧
 date: 2018-04-18
 categories: iOS开发
-tags: iOS 小技巧 经验之谈
+tags: [iOS, 小技巧, 经验之谈]
 ---
 
 
@@ -13,11 +13,13 @@ tags: iOS 小技巧 经验之谈
 
 Button type不要使用system，要用custom
 
-### tableView除掉多余空白行：
+### tableView去掉底部空白行：
 
 ```swift
 tableView.tableFooterView = [UIView new];
 ```
+
+<!-- more -->
 
 ### 自定义leftBarButtonItem导致左滑返回手势失效
 

@@ -1,11 +1,13 @@
 ---
-title: 使用hexo搭建GithubPage博客
+title: 使用Hexo搭建GithubPage博客
 date: 2020-04-26 08:19:50
-tags:
+categories: Mac
+tags: [Hexo, NodeJS]
 
 ---
 
 [Hexo](https://hexo.io/zh-cn/)是一个基于[Node.js](https://nodejs.org/)的高效静态网站生成框架，使你可以专注于MarkDown文档内容的编写，其他的网站资源生成交给Hexo就行了。我主要讲一讲自己是如何在Mac上面使用Hexo编写博客的。
+<!-- more -->
 
 ### 创建博客
 
@@ -117,3 +119,48 @@ deploy:
   local-dir: public
 ```
 
+### Hexo常用配置
+
+文章多标签的设置
+```markdown
+tags: [tag1, tag2, ...]
+```
+关闭某个文章的评论功能，前提是开启了评论插件
+
+```markdown
+comments: false
+```
+
+### next主题配置
+
+主题配置文件路径：`themes/next/_config.yml`
+
+#### 开启评论功能
+
+注册一个Disqus账号，在next主题目录的_config.yml修改如下配置
+```yaml
+disqus:
+  enable: true
+  shortname: your disqus short name
+  count: false # 是否展示文章评论数
+```
+
+#### 添加标签页面
+1. 修改主题配置：
+
+```yaml
+menu:
+  tags: /tags/ || fa fa-tags
+```
+
+2. Hexo创建tags文件夹
+
+```shell
+hexo new page tags
+```
+3. 修改tags/index.md文件
+
+```yaml
+type: "tag"
+comments: false
+```
