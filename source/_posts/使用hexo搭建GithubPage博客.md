@@ -137,7 +137,7 @@ comments: false
 
 #### 开启评论功能
 
-注册一个Disqus账号，在next主题目录的_config.yml修改如下配置
+注册一个 [Disqus](https://disqus.com/) 账号，在next主题目录的_config.yml修改如下配置
 ```yaml
 disqus:
   enable: true

@@ -1,14 +1,23 @@
 ---
 layout: post
-title: iOS HealthKit 接入
+title: iOS步数写入，撸一下AIA的羊毛
 date: 2018-08-15
 categories: iOS开发
 tags: [iOS, HealthKit]
 ---
+18年的时候买了一份AIA的重疾险，听保险人员说在他们App里面，每天上传1w+步数，一周可以兑换30元的京东E卡，一月内可以用积分兑换现金，最高每月145，虽说羊毛出在羊身上，但是好歹能捞回些钱来。
+于是我想了下，要达到每天1w+步数，大概有以下几种途径：
+1. 强身健体多走路，上传真实的步数
+2. 自带健康应用写步数
+3. 摇步神器
 
-HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。
+首先，每天运动1w+，觉得强度有点大，有点废鞋，运动达人可以略过。
+其次，我在iPhone的健康应用，试过直接写步数，然后进入AIA发现步数没什么变化，看来AIA已经防了这一招，不会读取用户直接在健康应用里面写入的步数。
+最后，摇步神器，试了很有用，不过要等上一两个小时...
+所以，我就尝试直接Xcode建了个应用，接入HealthKit，直接写入步数，AIA竟然识别了，喜大普奔！
 <!-- more -->
-
+话不多说，直接上教程
+HealthKit是苹果提供的一个健康数据接入库，开发人员可以由此读取、写入健康数据，不过依旧是需要先获取相应的接入权限才能使用。
 
 以读取和写入健康步数为例，首先用Xcode新建一个空白项目，然后配置项目相应的选项：
 
@@ -22,7 +31,7 @@ HealthKit是苹果提供的一个健康数据接入库，开发人员可以由�
 
 ### HKHandle.h 文件，定义几个常用的接口：
 
-```swift
+```objective-c
 // HKHandle.h
 #import <Foundation/Foundation.h>
 #import <HealthKit/HealthKit.h>
@@ -50,7 +59,7 @@ HealthKit是苹果提供的一个健康数据接入库，开发人员可以由�
 
 生成单例store对象，用于存储健康数据：
 
-```swift
+```objective-c
 + (HKHealthStore *)singleStore{
     
     static HKHealthStore *store;
@@ -64,7 +73,7 @@ HealthKit是苹果提供的一个健康数据接入库，开发人员可以由�
 
 健康数据类型，这里只有步数类型：
 
-```swift
+```objective-c
 + (NSSet *)defaultHKSet
 {
     // 步数
@@ -77,7 +86,7 @@ HealthKit是苹果提供的一个健康数据接入库，开发人员可以由�
 
 判断设备是否支持，请求HealthKit权限：
 
-```swift
+```objective-c
 
 + (void)requsetDefaultAuth:(void(^)(BOOL suc, NSString *msg))complention{
     
@@ -109,7 +118,7 @@ HealthKit是苹果提供的一个健康数据接入库，开发人员可以由�
 读取步数：
 HealthKit读取数据，需要一个query对象，步数读取需要`HKSampleQuery`类型的query。
 
-```swift
+```objective-c
 + (void)readDataWithSampleType:(HKSampleType *)type completion:(void(^)(NSArray *results, NSError *error))completion{
     
     NSPredicate *predicate = [self todayPredicate];
@@ -141,7 +150,7 @@ HealthKit读取数据，需要一个query对象，步数读取需要`HKSampleQue
 ```
 
 获取到步数的处理：
-```swift
+```objective-c
 - (IBAction)readSteps:(id)sender {
     
     HKSampleType *stepType = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
@@ -168,7 +177,7 @@ HealthKit读取数据，需要一个query对象，步数读取需要`HKSampleQue
 
 通用保存健康数据接口：
 
-```swift
+```objective-c
 // 通用保存接口
 + (void)saveHKObject:(HKObject *)obj completion:(void (^) (BOOL suc, NSError *error))completion{
     
@@ -190,7 +199,7 @@ HealthKit读取数据，需要一个query对象，步数读取需要`HKSampleQue
 
 生成步数，调用写入接口:
 
-```swift
+```objective-c
 // 生成步数，调用接口写入
 - (IBAction)writeSetp:(id)sender {
     [self.view endEditing:YES];
