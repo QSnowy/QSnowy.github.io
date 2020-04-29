@@ -581,7 +581,7 @@ comments:
 
 # Disqus
 disqus:
-  enable: true
+  enable: false
   shortname: qsnowy-github-io
   count: false
   #post_meta_order: 0
@@ -610,18 +610,18 @@ changyan:
 # Valine
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
-  enable: false
-  appid: # Your leancloud application appid
-  appkey: # Your leancloud application appkey
+  enable: true
+  appid: 2WRSHybBJ4zftmUIjs1Y6IbJ-gzGzoHsz
+  appkey: Drp0ySgqmVYgH718GTmu1slA
   notify: false # Mail notifier
   verify: false # Verification code
-  placeholder: Just go go # Comment box placeholder
+  placeholder: '说点儿什么...' # Comment box placeholder
   avatar: mm # Gravatar style
   guest_info: nick,mail,link # Custom comment header
   pageSize: 10 # Pagination size
-  language: # Language, available values: en, zh-cn
-  visitor: false # Article reading statistic
-  comment_count: true # If false, comment count will only be displayed in post page, not in home page
+  language: zh-cn # Language, available values: en, zh-cn
+  visitor: true # Article reading statistic
+  comment_count: false # If false, comment count will only be displayed in post page, not in home page
   recordIP: false # Whether to record the commenter IP
   serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
   #post_meta_order: 0
@@ -689,11 +689,11 @@ cnzz_siteid:
 # AppID and AppKey are recommended to be the same as valine's for counter compatibility.
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
-  enable: true
+  enable: false
   app_id: 2WRSHybBJ4zftmUIjs1Y6IbJ-gzGzoHsz
   app_key: Drp0ySgqmVYgH718GTmu1slA
   # Required for apps from CN region
-  server_url: https://2wrshybb.lc-cn-n1-shared.com
+  server_url: 'https://qsnowy.github.io'
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
   # If you don't care about security in leancloud counter and just want to use it directly
   # (without hexo-leancloud-counter-security plugin), set `security` to `false`.
