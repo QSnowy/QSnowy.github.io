@@ -51,7 +51,7 @@ navigationController.hidesBarsOnSwipe = YES;
 
 先看一下图片的拉伸图解：
 
-![image](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/imageStretch.png?Expires=1587888481&OSSAccessKeyId=TMP.3KeKGHpHaYVgGCDmzvnzdhhx2jZheMavaKAxaxhg19MXPitkdUoJt73TeviHcpoMuwj3ytADxx7k5RZrP9ugwNNK8uA2vm&Signature=hxyd%2Fd9Q34SPlnawM4ErolVcwPI%3D)
+![image](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/imageStretch.png)
 
 ```objective-c
 

@@ -9,20 +9,6 @@ tags: [iOS, 小技巧, 经验之谈]
 记录一下自己在日常的iOS开发过程中遇到的一些问题以及解决方法，方便以后查阅。
 <!-- more -->
 
-
-### SVN无法上传.a文件
-
-Xcode自带的svn和Versions以及一些其它工具都有默认忽略`.a`文件。
-
-在Versions中手动添加文件：
-选择Versions的菜单View--\>Show Ignored Items，这样就会显示出ignored的文件，找到你要上传的`.a`文件，右键`Add`就可以了。
-
-
-### Xcode unable to run app in simulator
-
-Xcode 界面，`shift + command +2` 快速进入`devices`窗口，查看当前的可用设备，找到无法启动的模拟器，删除并重新创建一个新的模拟器，再次运行该模拟器即可
-
-
 ### Cannot assign to self out of a method in the init family?
 
 初始化方法必须以init开头，并遵循驼峰命名法则
@@ -40,7 +26,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 不要勾选xib文件的`Adjust Scroll View Insets`
 
-### UITableView setEditing:YES animation:YES 没有动画效果
+### [UITableView setEditing:YES animation:YES] 没有动画效果
 
 因为后面再次调用了reloadData导致的。解决方法如下：
 
@@ -49,9 +35,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 ```objective-c
 [CATransaction begin];
 [CATransaction setCompletionBlock: ^{
-
   //animation 结束之后要运行的代码 
-
 }]; 
 [_tblView setEditing:YES animated:YES]; 
 [CATransaction commit];
@@ -69,59 +53,34 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 }];
 ```
 
-
-
-
-
 ### The document "MainStoryboard.storyboard" could not be opened. The operation couldn’t be completed. (com.apple.InterfaceBuilder error -1.) Check the console log for additional information.
 
-1.open storyboard as `source code` 
+1. open storyboard as `source code` 
 
-2.find `interredMetricsTieBreakers` block
+2. find `interredMetricsTieBreakers` block
 
-3.remove all `<segue reference = “” />`
+3. remove all `<segue reference = "" />`
 
-4.open storyboard as `interFace Builder`
-
+4. open storyboard as `interFace Builder`
 
 ### The document “ xxxx.xib" could not be opened.
 
+xib文件无法打开，一般是文件发生了冲突。
+
 解决方案：
 
-1.删除xib的 source code 里的冲突
+1. 以source code形式打开xib文件，然后删除xib的 source code 里的冲突
 
-2.右键.xib文件 -\> show file in inspector 文件type：default interface builder cocoa touch xib  (Xcode 7 点击一次ok)
+2. 右键.xib文件 -\> show file in inspector 文件type：default interface builder cocoa touch xib  (Xcode 7 点击一次ok)
 
 ### AVC的View自动加载AView的nib文件
 
 实例：iOS 10.3.3真机
 工程中以前有一个名为RewardView的View源文件以及相应的nib文件，再新建一个RewardViewController的源文件不带nib文件，当RewardViewController初始化时，竟然把RewardView的nib文件加载进来啦啦啦，我也是无言以对，难道VC的View加载机制是优先加载命名类似的nib文件？？？
 
-### 用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误
-
-```objective-c
-post_install do |installer| 
-    installer.pods_project.targets.each do |target| 
-        target.build_configurations.each do |config| 
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '8.0' 
-        end 
-    end 
-end
-```
-将上面的代码中的`8.0`替换成你要的系统版本号后，粘贴在`podfile`文件后面，执行`pod update` 或者 `pod install` 即可。
-
-#### iOS11tableView cell 分割线问题
-
-没有通过nib加载的cell，都会出现系统的分割线，通过nib加载的cell不会出现分割线
-
-### pods的第三方库有好多Warning
-```objective-c
-pod 'SSZipArchive', :inhibit_warnings => true
-```
-
 ### 自定义tabBarController的tabBar的title显示问题
 
-自定义tabBar的title跟系统的title重影，不要直接设置`vc.title=@“”`，要设置`vc.navigationItem.title=@“”`
+自定义tabBar的title跟系统的title重影，不要直接设置`vc.title=@""`，要设置`vc.navigationItem.title=@""`
 
 ### App想用http怎么办
 
@@ -138,7 +97,7 @@ pod 'SSZipArchive', :inhibit_warnings => true
 #define CCLog(...) printf("%f %s\n",[[NSDate date] timeIntervalSince1970],[[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
 ```
 
-### tableView Cell分割线位置
+###  tableView Cell分割线位置如何调整
 
 ```objective-c
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -164,10 +123,11 @@ pod 'SSZipArchive', :inhibit_warnings => true
 ### 如何实现斜纹背景
 
 项目中需要实现这样的效果：
-![][image-1]
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/stripe.png)
 
-每个半小时区间需要斜纹背景填充，可以用UIView或者CALayer实现。
+每半小时区间需要斜纹背景填充，可以用UIView或者CALayer实现。
 UIView实现：
+
 ```objective-c
  - (void)drawRect:(CGRect)rect {
     
@@ -275,8 +235,7 @@ CALayer实现：
 创建好`CBCentralManager` 后需要在`viewController` 的 `viewDidAppear`时执行扫描
 
 ```objective-c
-mCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-
+CBCentralManager *mCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 - (void)viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
@@ -286,16 +245,9 @@ mCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
 ```
 
-### pod update 获取不到最新repo
-
-先删除本地的repos，再setup，终端执行以下命令：
-```objective-c
-sudo rm -rf ~/.cocoapods/repos/master
-pod setup
-```
-
 ### iPhone X导航栏多了一条线
-![][image-2]
+
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/navi_line.png)
 
 看了一下导航栏的view层级，没有发现什么高度为1的view，然后突然醒悟到，可能是导航栏背景图片尺寸的问题，换了高度为88的图片就没事了。
 
@@ -314,14 +266,6 @@ imgUrl = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
 // iOS 9 之后
 imgUrl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 ```
-### SVN version is locked
-
-以CornerStone 为例，workingCopy，右键 -> Clean
-
-### SVN 报错 "An error occurred while contacting the repository.”
-
-删除钥匙串中SVN相关密码，重启SVN客户端。
-
 ### ScrollView代理scrollViewDidScroll:和scrollViewDidEndScrollingAnimation:执行了同样的业务代码，怎么防止执行多次呢？
 
 ```objective-c
@@ -335,10 +279,6 @@ imgUrl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacter
     // your code
 }
 ```
-### Xcode使用cocoapods打包出来的ipa包里面包含了第三方库，增加了包体积。
-
-删掉podfile里面的use_frame!
-
 ### webview激活键盘后，系统收起键盘会导致一系列问题，比如界面卡死，web内容消失等诡异现象
 
 自己的一个项目中，有一个界面展示多个webview，键盘弹出后，当屏幕发生翻转或者webview切换时，界面卡死，排查了一天，没有发现原因，结果添加了一行代码 `[self.view endEditing]` 主动收起键盘，再也没有出现该问题。
@@ -349,13 +289,3 @@ imgUrl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacter
 UIImage *originImage = [[UIImage imageWithName:@“”] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 UITabBarItem *barItem = [UITabBarItem alloc] initWithTitle:@“title” image:originImage selectedImage:selectedImage];
 ```
-### xcode-select: error: tool ‘xcodebuild’ requires Xcode
-
-xcodebuild需要调用Xcode去执行命令，但是xcode-select指向的路径是/Library/Developer/CommandLineTools，不是Xcode路径，所以将路径切换到Xcode路径下就OK了。
-
-```shell
-sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-```
-
-[image-1]:	/images/stripe.png
-[image-2]:	/images/navi_line.png

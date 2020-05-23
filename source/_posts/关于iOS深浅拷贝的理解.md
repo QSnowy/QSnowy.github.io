@@ -1,6 +1,6 @@
 ---
 layout: post
-title: iOS深浅拷贝
+title: 关于iOS深浅拷贝的理解
 date: 2017-12-07
 categories: iOS开发
 tags: [iOS, 深浅拷贝]
@@ -54,7 +54,6 @@ tags: [iOS, 深浅拷贝]
 - 可变的非集合对象`copy`，创建新内存空间，成为不可变对象；
 - 可变的非集合对象`mutableCopy`，创建新内存空间。
 
-
 ### 2、iOS中集合类的深浅拷贝
 
 #### 集合类的拷贝主要分为下面三种类型：
@@ -64,7 +63,7 @@ tags: [iOS, 深浅拷贝]
 - 完全复制(real-deep copy)：在完全复制操作时，对于被复制对象的每一层都是对象复制。
 
 来自苹果官方的解释图例：[官方链接](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Collections/Articles/Copying.html "官方链接")
-![](/images/CopyingCollections.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/CopyingCollections.png)
 
 集合的深浅拷贝示例代码：
 

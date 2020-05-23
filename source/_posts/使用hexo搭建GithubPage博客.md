@@ -85,7 +85,7 @@ hexo deploy
 
 然后在 [GitHubSetting](https://github.com/settings/tokens) 生成一个token，将这个token复制下来，回到 [Travis](https://travis-ci.com/getting_started) 中，在仓库 `<yourname>.github.io` 配置一下`Environment Variables`，添加下面一行键值对
 
-![ghtoken](/images/Travis_GH_TOKEN.png)
+![ghtoken](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/Travis_GH_TOKEN.png)
 
 在博客目录下，新建一个自动编译配置文件`.travis.yml`，注意目前GitHubPages的默认的站点分支是master，无法指定gh-pages了。
 

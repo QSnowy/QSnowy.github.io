@@ -10,7 +10,7 @@ tags: [iOS, WebView]
 随后发现在PC端用`<img>`展示的时候，图片发生了偏转。
 
 具体大概是这个样子的，客户吐槽：多年的颈椎病都被治好了。
-![](/images/webImageOrientation6.png)
+![方向错误的图片](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/webImageOrientation6.png)
 
 <!-- more -->
 

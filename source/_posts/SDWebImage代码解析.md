@@ -70,6 +70,7 @@ SDWebImage是GitHub上面一个很火的iOS和MacOS平台下，图片下载、�
 任务在收到请求回应后，会将接受到的图片数据解码成为UIImage对象，再通过Block进行回调给主线程。
 
 #### 常用方法：
+
 初始化一个任务，这是一个实现的协议方法。
 ```swift
 - (nonnull instancetype)initWithRequest:(nullable NSURLRequest *)request
@@ -241,26 +242,26 @@ CG_EXTERN CGContextRef __nullable CGBitmapContextCreate(void * __nullable data,
 
 图片管理模块
 
-![](/images/sdwebmanger.png)
+![管理](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sdwebmanger.png)
 
 图片下载工具模块
 
-![](/images/sddownloader.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sddownloader.png)
 
 图片缓存模块
 
-![](/images/sdcache.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sdcache.png)
 
 图片解码模块
 
-![](/images/sdcoder.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sdcoder.png)
 
 扩展工具模块
 
-![](/images/sdextension.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sdextension.png)
 
 其他模块
 
-![](/images/sdother.png)
+![](https://snowyblog.oss-cn-shenzhen.aliyuncs.com/sdother.png)
 
 
