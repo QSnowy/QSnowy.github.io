@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="QSnowy">
 <meta property="og:description" content="Hexo是一个基于Node.js的高效静态网站生成框架，使你可以专注于MarkDown文档内容的编写，其他的网站资源生成交给Hexo就行了。我主要讲一讲自己是如何在Mac上面使用Hexo编写博客的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/images/Travis_GH_TOKEN.png">
+<meta property="og:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/Travis_GH_TOKEN.png">
 <meta property="article:published_time" content="2020-04-26T08:19:50.000Z">
-<meta property="article:modified_time" content="2020-04-29T02:07:57.867Z">
+<meta property="article:modified_time" content="2020-05-23T01:32:16.047Z">
 <meta property="article:author" content="QSnowy">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="NodeJS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/Travis_GH_TOKEN.png">
+<meta name="twitter:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/Travis_GH_TOKEN.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/04/26/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAGithubPage%E5%8D%9A%E5%AE%A2/">
 
@@ -190,7 +190,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 02:07:57" itemprop="dateModified" datetime="2020-04-29T02:07:57+00:00">2020-04-29</time>
+                <time title="修改时间：2020-05-23 01:32:16" itemprop="dateModified" datetime="2020-05-23T01:32:16+00:00">2020-05-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,7 +270,7 @@
 <p>使用GitHub账号登陆Travis， 在 <a href="https://github.com/settings/applications" target="_blank" rel="noopener">GitHubApplications</a> 能看到被授权的Travis应用。</p>
 <p>然后在 <a href="https://github.com/settings/installations" target="_blank" rel="noopener">GithubInstallActions</a> 配置一下Travis可以访问的博客仓库。</p>
 <p>然后在 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">GitHubSetting</a> 生成一个token，将这个token复制下来，回到 <a href="https://travis-ci.com/getting_started" target="_blank" rel="noopener">Travis</a> 中，在仓库 <code>&lt;yourname&gt;.github.io</code> 配置一下<code>Environment Variables</code>，添加下面一行键值对</p>
-<p><img src="/images/Travis_GH_TOKEN.png" alt="ghtoken"></p>
+<p><img src="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/Travis_GH_TOKEN.png" alt="ghtoken"></p>
 <p>在博客目录下，新建一个自动编译配置文件<code>.travis.yml</code>，注意目前GitHubPages的默认的站点分支是master，无法指定gh-pages了。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定语言环境</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="comment"># 指定是否需要sudo权限</span></span><br><span class="line"><span class="attr">sudo:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment"># 指定node_js版本</span></span><br><span class="line"><span class="attr">node_js:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">10.0</span></span><br><span class="line"><span class="comment"># 指定缓存模块，可选，加快编译速度</span></span><br><span class="line"><span class="attr">cache:</span> <span class="string">npm</span></span><br><span class="line"><span class="comment"># 指定博客源码分支</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="comment"># 清除之前缓存，生成新网站资源</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">clean</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">generate</span></span><br><span class="line"><span class="comment"># 部署</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">pages</span></span><br><span class="line">  <span class="attr">skip-cleanup:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">github-token:</span> <span class="string">$GH_TOKEN</span></span><br><span class="line">  <span class="attr">keep-history:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">on:</span></span><br><span class="line">    <span class="attr">all_branches:</span> <span class="literal">true</span> <span class="comment"># solve a permission problem</span></span><br><span class="line">  <span class="attr">target_branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">local-dir:</span> <span class="string">public</span></span><br></pre></td></tr></table></figure>
 
@@ -318,7 +318,10 @@
     <a href="/2019/07/05/2019%E5%85%A5%E6%88%B7%E5%B9%BF%E5%B7%9E/" rel="prev" title="2019广州学历入户亲身经历">
       <i class="fa fa-chevron-left"></i> 2019广州学历入户亲身经历
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/23/Mac%E4%B8%8BCocoapods%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" rel="next" title="Mac下Cocoapods的安装和使用">
+      Mac下Cocoapods的安装和使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -394,7 +397,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -405,7 +408,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

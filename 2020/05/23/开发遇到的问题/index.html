@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在日常开发过程中，经常会遇到一些非技术性的问题，比如国外仓库下载太慢，系统升级后一些命令行莫名其妙的不能用了等一系列问题，这里收集一些自己遇到的此类问题，方便在后续开发过程中能迅速查找并解决问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发过程中的问题以及解决方案">
+<meta property="og:url" content="http://yoursite.com/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="QSnowy">
+<meta property="og:description" content="在日常开发过程中，经常会遇到一些非技术性的问题，比如国外仓库下载太慢，系统升级后一些命令行莫名其妙的不能用了等一系列问题，这里收集一些自己遇到的此类问题，方便在后续开发过程中能迅速查找并解决问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/file_tree.png">
+<meta property="og:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/socks5_port.png">
+<meta property="article:published_time" content="2020-05-23T01:32:16.047Z">
+<meta property="article:modified_time" content="2020-05-23T01:32:16.047Z">
+<meta property="article:author" content="QSnowy">
+<meta property="article:tag" content="经验之谈，开发环境">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/file_tree.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>开发过程中的问题以及解决方案 | QSnowy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">QSnowy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">代码会说话</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="QSnowy">
+      <meta itemprop="description" content="鲜花盛开，蝴蝶自来">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="QSnowy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          开发过程中的问题以及解决方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-23 01:32:16" itemprop="dateCreated datePublished" datetime="2020-05-23T01:32:16+00:00">2020-05-23</time>
+            </span>
+
+          
+            <span id="/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="开发过程中的问题以及解决方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/23/%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在日常开发过程中，经常会遇到一些非技术性的问题，比如国外仓库下载太慢，系统升级后一些命令行莫名其妙的不能用了等一系列问题，这里收集一些自己遇到的此类问题，方便在后续开发过程中能迅速查找并解决问题。</p>
+<a id="more"></a>
+
+<h4 id="Git拉取远端仓库，出现-The-ECDSA-host-key-for-lt-xxx-xxx-com-gt-has-changed-and-the-key-for-the-corresponding-IP-Address-39-x-x-x-x-39-is-unknown"><a href="#Git拉取远端仓库，出现-The-ECDSA-host-key-for-lt-xxx-xxx-com-gt-has-changed-and-the-key-for-the-corresponding-IP-Address-39-x-x-x-x-39-is-unknown" class="headerlink" title="Git拉取远端仓库，出现 The ECDSA host key for &lt;xxx.xxx.com&gt; has changed, and the key for the corresponding IP Address &#39;x.x.x.x&#39; is unknown."></a>Git拉取远端仓库，出现 <code>The ECDSA host key for &lt;xxx.xxx.com&gt; has changed, and the key for the corresponding IP Address &#39;x.x.x.x&#39; is unknown.</code></h4><p>因为之前从远端拉取过代码，本地的know_hosts已经缓存了相应的信息，再次连接ssh会自动匹配之前保存的信息。如果本地系统重装或者ssh被删除，都会出现此类错误。删掉对应的域名缓存信息即可。</p>
+<ul>
+<li>删除掉known_hosts里面的信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -R &lt;xx.com or ip&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者直接删掉 <code>~/.ssh/known_hosts</code> 文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+<h4 id="升级系统后出现，xcrun-error-invalid-active-developer-path-Library-Developer-CommandLineTools-missing-xcrun-at-Library-Developer-CommandLineTools-usr-bin-xcrun"><a href="#升级系统后出现，xcrun-error-invalid-active-developer-path-Library-Developer-CommandLineTools-missing-xcrun-at-Library-Developer-CommandLineTools-usr-bin-xcrun" class="headerlink" title="升级系统后出现，xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun"></a>升级系统后出现，<code>xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun</code></h4><p>原因：Xcode命令行工具没有正确安装。</p>
+<p>解决方法：重装xcode command line</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac下如何生成目录树"><a href="#Mac下如何生成目录树" class="headerlink" title="Mac下如何生成目录树"></a>Mac下如何生成目录树</h3><p>有时候需要展示一下源码的文件结构，类似于下面的文件目录树，肿么办呢？</p>
+<p><img src="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/file_tree.png" alt="file-tree"></p>
+<p>Mac下安装一下 <code>tree</code> 命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install tree</span><br></pre></td></tr></table></figure>
+
+<p>打开文件目录，输入以下命令，就能以树形结构展示当前目录下所有文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -l</span><br></pre></td></tr></table></figure>
+
+<h3 id="Git-clone-出现-transfer-closed-with-outstanding-read-data-remaining"><a href="#Git-clone-出现-transfer-closed-with-outstanding-read-data-remaining" class="headerlink" title="Git clone 出现 transfer closed with outstanding read data remaining"></a>Git clone 出现 <code>transfer closed with outstanding read data remaining</code></h3><p>原因有两个：1 缓存区溢出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.postBuffer 524288000</span><br></pre></td></tr></table></figure>
+
+<p>2 网络速度太慢</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.lowSpeedLimit 0</span><br><span class="line">git config --global http.lowSpeedTime 99999</span><br></pre></td></tr></table></figure>
+
+<h3 id="Git-clone-太慢"><a href="#Git-clone-太慢" class="headerlink" title="Git clone 太慢"></a>Git clone 太慢</h3><p>代码仓库在国外，国内访问速度很慢，需要本地电脑开启SS，然后为git添加全局代理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.https://github.com.proxy socks5://127.0.0.1:1086</span><br></pre></td></tr></table></figure>
+
+<p>那个1086端口，要替换成自己电脑的端口号，下图是我自己电脑的配置</p>
+<p><img src="https://snowyblog.oss-cn-shenzhen.aliyuncs.com/socks5_port.png" alt="socks5"></p>
+<p>如果想去掉代理，在终端执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset http.https://github.com.proxy</span><br></pre></td></tr></table></figure>
+
+<h3 id="用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误"><a href="#用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误" class="headerlink" title="用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误"></a>用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">post_install <span class="keyword">do</span> <span class="params">|installer|</span> </span><br><span class="line">    installer.pods_project.targets.each <span class="keyword">do</span> <span class="params">|target|</span> </span><br><span class="line">        target.build_configurations.each <span class="keyword">do</span> <span class="params">|config|</span> </span><br><span class="line">            config.build_settings[<span class="string">'IPHONEOS_DEPLOYMENT_TARGET'</span>] = <span class="string">'8.0'</span> </span><br><span class="line">        <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>将上面的代码中的<code>8.0</code>替换成你要的系统版本号后，粘贴在<code>podfile</code>文件后面，执行<code>pod update</code> 或者 <code>pod install</code> 即可。</p>
+<h3 id="pod-update-获取不到最新repo"><a href="#pod-update-获取不到最新repo" class="headerlink" title="pod update 获取不到最新repo"></a>pod update 获取不到最新repo</h3><p>因为 <code>~/.cocoapods/repos/master</code> 中的索引仓库是旧的，需要手动更新一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo update</span><br></pre></td></tr></table></figure>
+
+<h3 id="pods的第三方库有好多Warning"><a href="#pods的第三方库有好多Warning" class="headerlink" title="pods的第三方库有好多Warning"></a>pods的第三方库有好多Warning</h3><p>不想改第三方库的源码，那就直接禁用第三方库的警告</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod 'SSZipArchive', :inhibit_warnings =&gt; true</span><br></pre></td></tr></table></figure>
+
+<h3 id="SVN-仓库报错-version-is-locked"><a href="#SVN-仓库报错-version-is-locked" class="headerlink" title="SVN 仓库报错 version is locked"></a>SVN 仓库报错 <code>version is locked</code></h3><p>以CornerStone 为例，选中一个仓库workingCopy，右键 -&gt; Clean</p>
+<h3 id="SVN-报错-“An-error-occurred-while-contacting-the-repository-”"><a href="#SVN-报错-“An-error-occurred-while-contacting-the-repository-”" class="headerlink" title="SVN 报错 “An error occurred while contacting the repository.”"></a>SVN 报错 “An error occurred while contacting the repository.”</h3><p>删除钥匙串中SVN相关密码，重启SVN客户端。</p>
+<h3 id="Xcode-工程编译脚本权限错误-：-xxx-sh-Permission-denied"><a href="#Xcode-工程编译脚本权限错误-：-xxx-sh-Permission-denied" class="headerlink" title="Xcode 工程编译脚本权限错误 ：`xxx.sh: Permission denied"></a>Xcode 工程编译脚本权限错误 ：`xxx.sh: Permission denied</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x xxx.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="xcode-select-error-tool-‘xcodebuild’-requires-Xcode"><a href="#xcode-select-error-tool-‘xcodebuild’-requires-Xcode" class="headerlink" title="xcode-select: error: tool ‘xcodebuild’ requires Xcode"></a>xcode-select: error: tool ‘xcodebuild’ requires Xcode</h3><p>xcodebuild需要调用Xcode去执行命令，但是xcode-select指向的路径是/Library/Developer/CommandLineTools，不是Xcode路径，所以将路径切换到Xcode路径下就OK了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</span><br></pre></td></tr></table></figure>
+
+<h3 id="Xcode-unable-to-run-app-in-simulator"><a href="#Xcode-unable-to-run-app-in-simulator" class="headerlink" title="Xcode unable to run app in simulator"></a>Xcode unable to run app in simulator</h3><p>Xcode 界面，<code>shift + command +2</code> 快速进入<code>devices</code>窗口，查看当前的可用设备，找到无法启动的模拟器，删除并重新创建一个新的模拟器，再次运行该模拟器即可</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88%EF%BC%8C%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag"># 经验之谈，开发环境</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/23/Mac%E4%B8%8BCocoapods%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" rel="prev" title="Mac下Cocoapods的安装和使用">
+      <i class="fa fa-chevron-left"></i> Mac下Cocoapods的安装和使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git拉取远端仓库，出现-The-ECDSA-host-key-for-lt-xxx-xxx-com-gt-has-changed-and-the-key-for-the-corresponding-IP-Address-39-x-x-x-x-39-is-unknown"><span class="nav-number">1.</span> <span class="nav-text">Git拉取远端仓库，出现 The ECDSA host key for &lt;xxx.xxx.com&gt; has changed, and the key for the corresponding IP Address &#39;x.x.x.x&#39; is unknown.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#升级系统后出现，xcrun-error-invalid-active-developer-path-Library-Developer-CommandLineTools-missing-xcrun-at-Library-Developer-CommandLineTools-usr-bin-xcrun"><span class="nav-number">2.</span> <span class="nav-text">升级系统后出现，xcrun: error: invalid active developer path (&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools), missing xcrun at: &#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;bin&#x2F;xcrun</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac下如何生成目录树"><span class="nav-number"></span> <span class="nav-text">Mac下如何生成目录树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-clone-出现-transfer-closed-with-outstanding-read-data-remaining"><span class="nav-number"></span> <span class="nav-text">Git clone 出现 transfer closed with outstanding read data remaining</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-clone-太慢"><span class="nav-number"></span> <span class="nav-text">Git clone 太慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用cocoapods安装的第三方库默认iOS-Deployment-Target-4-3，导致工程编译错误"><span class="nav-number"></span> <span class="nav-text">用cocoapods安装的第三方库默认iOS Deployment Target 4.3，导致工程编译错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pod-update-获取不到最新repo"><span class="nav-number"></span> <span class="nav-text">pod update 获取不到最新repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pods的第三方库有好多Warning"><span class="nav-number"></span> <span class="nav-text">pods的第三方库有好多Warning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVN-仓库报错-version-is-locked"><span class="nav-number"></span> <span class="nav-text">SVN 仓库报错 version is locked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVN-报错-“An-error-occurred-while-contacting-the-repository-”"><span class="nav-number"></span> <span class="nav-text">SVN 报错 “An error occurred while contacting the repository.”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-工程编译脚本权限错误-：-xxx-sh-Permission-denied"><span class="nav-number"></span> <span class="nav-text">Xcode 工程编译脚本权限错误 ：&#96;xxx.sh: Permission denied</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode-select-error-tool-‘xcodebuild’-requires-Xcode"><span class="nav-number"></span> <span class="nav-text">xcode-select: error: tool ‘xcodebuild’ requires Xcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-unable-to-run-app-in-simulator"><span class="nav-number"></span> <span class="nav-text">Xcode unable to run app in simulator</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="QSnowy"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">QSnowy</p>
+  <div class="site-description" itemprop="description">鲜花盛开，蝴蝶自来</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QSnowy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;QSnowy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:736246606@qq.com" title="E-Mail → mailto:736246606@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">QSnowy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '2WRSHybBJ4zftmUIjs1Y6IbJ-gzGzoHsz',
+      appKey     : 'Drp0ySgqmVYgH718GTmu1slA',
+      placeholder: "说点儿什么...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
