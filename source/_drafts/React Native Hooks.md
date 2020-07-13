@@ -44,6 +44,10 @@ const App = () => {
 }
 ```
 
+函数组件渲染过程：状态state发生变化，组件DOM渲染更新，清除之前的effect，运行当前的effect。
+
+每次渲染都有自己的state常量和effect。
+
 ### useRef
 
 使用 `useRef`，并配合 `forwardRef` 可以将函数组件内的节点或者接口暴露给外界。
