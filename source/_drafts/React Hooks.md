@@ -1,8 +1,15 @@
+---
+title: React Hooks
+tag: [ReactNative, Hook]
+---
+
 ### Hook的使用
 
 React 16.8新特性，在不使用Class的情况下使用state和其他React特性 
 
 #### useState
+
+普通的函数组件是无状态的，有了useState，就可以为函数引入状态管理
 
 ```react
 import React, { useState } from 'react';
@@ -45,8 +52,8 @@ const App = () => {
 ```
 
 函数组件渲染过程：状态state发生变化，组件DOM渲染更新，清除之前的effect，运行当前的effect。
-
 每次渲染都有自己的state常量和effect。
+Effect每次渲染时，都会捕捉当时的组件内部的state和props
 
 ### useRef
 
