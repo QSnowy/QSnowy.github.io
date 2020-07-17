@@ -32,15 +32,15 @@ const comp = () => {
 
 ```javascript
 const App = () => {
-  // useEffect(func, [参数])
-  // 如果[参数]不传递，每次组件刷新都会执行func，相当于didMount和didUpdate声明周期融合
+  // useEffect(func, [依赖])
+  // 如果[依赖]不传递，每次组件刷新都会执行func，相当于didMount和didUpdate声明周期融合
   useEffect(() => {
     console.log('component mounted or updated');
     return () => {
       console.log('destory something');
     }
   })
-  // 只有参数变量发生变化时，才会触发函数执行
+  // 依赖发生变化时，才会触发effect
   useEffect(() => {
     console.log('name is changed', name); 
   }, [name])
@@ -52,8 +52,56 @@ const App = () => {
 ```
 
 函数组件渲染过程：状态state发生变化，组件DOM渲染更新，清除之前的effect，运行当前的effect。
-每次渲染都有自己的state常量和effect。
-Effect每次渲染时，都会捕捉当时的组件内部的state和props
+Effect每次渲染时，都会捕捉当时的组件内部的state和props。
+
+
+
+### useReducer
+
+useReducer可以为组件提供类似于Redux的功能。
+
+```javascript
+// useReducer(reducer, initState) 接受一个函数,初始状态,返回[state, dispatch]
+// reducer: (state, action) => newState 接受状态和一个action，根据action的type做出相应的动作
+const Ticker = () => {
+  const [state, dispatch] = useReducer(reducer, initState);
+  
+  useEffect(() => {
+    	const id = setInterval(() => {
+        dispatch({type: 'tick'});
+      }, 1000);
+    	return () => clearInterval(id)
+  },[dispatch])
+  
+  return (
+ 		<h1>{state.count}</h1>
+    <input value={state.step}  onChange={e => {
+    	dispatch({
+    		type: 'step',
+    		step: Number(e.target.value)
+    })
+    }}/>
+  )
+}
+
+const initState = {
+  count: 0,
+  step: 1
+}
+// 根据不同的action，对state做出相应的处理并返回
+const reducer = (state, action) => {
+  const {count, step} = state;
+  if (action.type === 'tick') {
+    return {count: count+step, step};
+  }else if (action.type === 'step') {
+    return {count, step: action.step};
+  }else {
+    throw new Error('not match action');
+  }
+}
+```
+
+
 
 ### useRef
 
@@ -134,12 +182,6 @@ const App = () => {
   )
 }
 ```
-
-
-
-
-
-
 
 
 
