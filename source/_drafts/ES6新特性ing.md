@@ -7,9 +7,25 @@ tags: [JavaScript, ES6]
 
 #### let 和 const
 
-let声明的变量，只在声明的代码块内有效。在未声明变量前，使用该变量会报错ReferenceError。
+**let变量的作用域**
 
-在循环变量声明中，每次循环都会生成一个新的变量，JavaScript引擎会记住上次循环值。
+let用来声明新的变量，由let声明的变量，只在声明的代码块内有效。在代码块外、未声明变量前，调用该变量都会报错 `ReferenceError`。
+
+```javascript
+{
+  // 在声明前引用
+  console.log('inner let a is ',a); // ReferenceError
+  let a = 1;
+  var b = 3;
+}
+	// 在代码块外面
+  console.log('out print let a is ', a); // ReferenceError
+	console.log('out print var b is ', b); // 3
+```
+
+**for循环作用域**
+
+使用let，在循环变量声明中，每次循环都会生成一个新的变量，JavaScript引擎会记住上次循环值。
 
 ```javascript
 let a = [];
@@ -33,7 +49,32 @@ for (let a = 0; a < 10; a ++) {
 }
 ```
 
-var声明的变量，在整个文件内有效。
+**暂时性死区**
+
+在代码块内，如果有let声明的变量，那么在声明前，对变量进行调用都会出现ReferenceError，且不受外界影响，这个区域就是暂时性死区。
+
+```javascript
+// 内部的x有着自己的作用域，不受外界x影响。
+let x = 5;
+{
+  // zone begin
+  let x = y;
+  console.log(y);
+  let y; // zone end
+  y = 3;
+}
+```
+
+
+
+var声明的变量，在整个文件内有效，而且可以变量提升，即在未声明前就可以使用，并且为`undefined`
+
+```javascript
+console.log(a); // undefined 调用时变量a并没有声明，但是已经可以访问
+var a = 3;
+```
+
+
 
 
 
@@ -58,7 +99,7 @@ console.log('userId',userId);
 
 `async` 函数返回一个 Promise 对象，可以使用`then`方法添加回调函数。当函数执行的时候，一旦遇到`await`就会先返回，等到异步操作完成，再接着执行函数体内后面的语句。
 
-
+#### Promise
 
 #### 变量提升
 

@@ -1,4 +1,105 @@
-function.apply()
+### 基本数据类型
+
+- javascript中数据类型：`number`、`boolean`、`string`、`null`、`undefined`、`object`
+- Javascript的对象：狭义的对象（object）、Array、Function
+- 自动判断为false的值：`undefined`、`null`、0、NaN、false、""
+- 由于`null`转为`number`时为0，为了避免出错，定义了`undefined`类型
+
+### 对象
+
+- 普通的对象就是{key:value}对组成的数据结构，key一定是字符串，也叫属性；value可以是任意值；
+
+- 指向的对象的变量，只是引用值；指向基本数据的变量，是拷贝值
+
+  ```javascript
+  var a = {name: 'boy'};
+  var b = a;
+  a.name = 'girl';
+  a = 1;
+  // 
+  console.log(`a is ${a} b is ${b}`); // a = 1 b = {name: 'girl'}
+  var x = 5;
+  var y = x;
+  x = 1;
+  console.log(`x is ${x} y is ${y}`) // x = 1 y =5;
+  
+  ```
+
+- 遍历对象的可遍历属性，for ... in object
+
+  ```javascript
+  var o = {name: 'bob', age: 19, weight: 50}
+  for (var k in o) {
+    // k = name; k = age; k = weight;
+    if (o.hasOwnProperty(k)) {
+      	// 判断当前属性是否是自身，而非继承过来的
+    }
+  }
+  ```
+
+- with可以批量操作对象属性，但是由于不经意间创建全局变量，不建议使用
+
+  ```javascript
+  let obj = {name: 'xue'};
+  with (obj) {
+    name = 'quan';
+    // 由于obj没有age属性，会自动创建一个全局变量age
+    age = 18;
+  } 
+  ```
+
+
+### 函数
+
+在JavaScript中函数与其他数据类型一样，被看作对象，可以进行传递和返回。函数的声明，会被变量提升到首行。
+
+```javascript
+foo();
+function foo() {
+  console.log('function is hoist');
+}
+```
+
+- var声明的变量只有在函数作用域内才算做局部变量，其他地方都属于全局变量
+
+- 函数执行的作用域是定义时的作用域，而不是调用时的作用域；
+
+```javascript
+var a = 9;
+function foo() {
+  console.log(a);
+}
+
+function zoo() {
+  var a = 2;
+  foo();
+}
+// 9
+```
+
+- 函数参数传递：值传递、地址传递（对象、数组、函数）
+
+```javascript
+// 值传递
+var a = 9;
+function change(val) {
+  val = 8;
+}
+console.log('a is',a)
+// 9 函数内部修改的是val指向的9，而不是变量a
+// 地址传递
+var b = {name: 'xue'};
+function foo(v) {
+  v = {name: 'quan'}；
+  v.name 'zhang';
+}
+console.log('b is ', b);
+// b is {name: 'xue'}; 形参v指向了b的地址，但是内部又将v指向了新的object，所以之前的对象没有发生变化
+```
+
+
+
+
 
 JavaScript的函数上下文，存在`定义时上下文`, `运行时上下文`, `上下文可改变`。
 
