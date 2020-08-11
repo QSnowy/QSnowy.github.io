@@ -51,10 +51,8 @@ const App = () => {
 }
 ```
 
-函数组件渲染过程：状态state发生变化，组件DOM渲染更新，清除之前的effect，运行当前的effect。
-Effect每次渲染时，都会捕捉当时的组件内部的state和props。
-
-
+**函数组件渲染过程：状态state发生变化，组件DOM渲染更新，清除之前的effect，运行当前的effect。**
+**每次渲染都会创建新的变量、effect、函数。只有effect知道上次发生了什么**
 
 ### useReducer
 
@@ -100,8 +98,6 @@ const reducer = (state, action) => {
   }
 }
 ```
-
-
 
 ### useRef
 
