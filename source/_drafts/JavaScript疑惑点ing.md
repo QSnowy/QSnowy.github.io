@@ -61,17 +61,20 @@ function foo() {
 ```
 
 - var声明的变量只有在函数作用域内才算做局部变量，其他地方都属于全局变量
-
+- 函数默认返回值是 `undefined`
+- 函数默认属性：length会返回参数的个数
 - 函数执行的作用域是定义时的作用域，而不是调用时的作用域；
 
 ```javascript
 var a = 9;
 function foo() {
+  // 函数作用域中的变量a=9
   console.log(a);
 }
 
 function zoo() {
   var a = 2;
+  // 此时定义的变量不会影响到函数内部引用的变量
   foo();
 }
 // 9
