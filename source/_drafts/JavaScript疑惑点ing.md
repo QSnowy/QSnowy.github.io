@@ -1,3 +1,7 @@
+---
+title: JavaScript
+---
+
 ### 基本数据类型
 
 - javascript中数据类型：`number`、`boolean`、`string`、`null`、`undefined`、`object`
@@ -100,7 +104,23 @@ console.log('b is ', b);
 // b is {name: 'xue'}; 形参v指向了b的地址，但是内部又将v指向了新的object，所以之前的对象没有发生变化
 ```
 
+- arguments： 函数内部所有参数集合，只有在函数内部才能使用，并非是Array，箭头函数里不能用，带有一个`callee`属性，返回原函数
 
+```javascript
+function add() {
+  let num = 0,
+      len = arguments.length;
+  if (var i = 0; i < len; i ++) {
+    num += 1;
+  }
+  console.log('func has arg count = ', num);
+}
+add();						// 0
+add(1,2,3);				// 3
+add(1,2,3,4,5,6);	// 6
+```
+
+- 闭包(closure)
 
 
 
@@ -120,22 +140,3 @@ f.say();
 ```
 
 函数还可以添加属性值，感觉很厉害的样子
-
-
-
-arguments： 函数内部所有参数集合，并非是Array，箭头函数里不能用
-
-```javascript
-function add() {
-  let num = 0,
-      len = arguments.length;
-  if (var i = 0; i < len; i ++) {
-    num += 1;
-  }
-  console.log('func has arg count = ', num);
-}
-add();						// 0
-add(1,2,3);				// 3
-add(1,2,3,4,5,6);	// 6
-```
-
