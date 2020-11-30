@@ -122,6 +122,22 @@ add(1,2,3,4,5,6);	// 6
 
 - 闭包(closure)
 
+为了获取函数内部的变量才有了闭包，本质上，闭包是将函数内部和函数外部连接起来的桥梁。最大用处：可以读取函数内部变量，让变量始终保持在内存中。
+
+```javascript
+function IncreateFoo(start) {
+ 	return function () {
+    return start++;
+  }
+}
+
+// 外界使用，闭包内部保留的传入的数值
+var inc = IncreateFoo(5);
+inc(); 	// 5
+inc();	// 6
+inc();	// 7
+```
+
 
 
 JavaScript的函数上下文，存在`定义时上下文`, `运行时上下文`, `上下文可改变`。
@@ -139,4 +155,23 @@ f.say();
 // my color is red
 ```
 
-函数还可以添加属性值，感觉很厉害的样子
+函数还可以添加属性值，感觉很厉害的样子。
+
+### 数组
+
+在JavaScript中数组，本质上也是object。
+
+```javascript
+let arr = [0, 'abc'];
+typeof(arr); // object
+```
+
+默认的键值就是常用的索引值：0、1 ...，除了默认的键值，还能够添加自定义的key。
+
+```javascript
+let arr = ['a', 'b', 'c'];
+arr['name'] = 'array';
+```
+
+
+
