@@ -173,5 +173,54 @@ let arr = ['a', 'b', 'c'];
 arr['name'] = 'array';
 ```
 
+可以通过直接赋值length属性清空数组
+
+```javascript
+let arr = [1,2,3,4];
+arr.length = 0; // 清空数组
+```
+
+### 错误处理
+
+JavaScript一旦发生错误，就会抛出异常，停止运行。原生`Error`对象都有一个`message`属性，其他可能还有`name` 和 `stack` 信息。
+
+```javascript
+var err = new Error('错误信息');
+err.meessage; // 错误信息
+```
+
+`throw` 语句，手动终止，并抛出错误，或者其他任意类型值
+
+```javascript
+function trowAny() {
+  throw new Error('stop by user');
+  // 其他任意类型
+  // throw 1; throw 'error'; throw {name: 'obj'}
+}
+```
+
+`try...catch...finally` 语句，无论是否发生错误都会执行 `finally` 语句，并且会覆盖 `catch` 中的返回值
+
+```javascript
+function foo() {
+  try {
+		console.log(0);
+  	throw 'bug';
+	} catch (err) {
+  	console.log(1);
+  	return true;		// 会延迟在finally后面执行
+  	console.log(2); // 不会执行
+	} finally {
+  	console.log(3);
+  	return true;		// 覆盖之前的true，返回值变为false
+  	console.log(4); // 不会执行
+	}
+  console.log(5);		// 不会执行
+}
+let res = foo();
+// 0 1 3
+res // false
+```
+
 
 
