@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="鲜花盛开，蝴蝶自来">
-<meta property="og:type" content="website">
-<meta property="og:title" content="QSnowy">
-<meta property="og:url" content="http://yoursite.com/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
+  <meta name="description" content="按照官网介绍进行环境配置，拉取代码到本地 1234# Get the emsdk repogit clone https:&#x2F;&#x2F;github.com&#x2F;emscripten-core&#x2F;emsdk.git]# Enter that directorycd emsdk  下载并安装最新工具包 12345678910# Download and install the latest SDK tools..&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac安装Emscripten">
+<meta property="og:url" content="http://yoursite.com/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/index.html">
 <meta property="og:site_name" content="QSnowy">
-<meta property="og:description" content="鲜花盛开，蝴蝶自来">
+<meta property="og:description" content="按照官网介绍进行环境配置，拉取代码到本地 1234# Get the emsdk repogit clone https:&#x2F;&#x2F;github.com&#x2F;emscripten-core&#x2F;emsdk.git]# Enter that directorycd emsdk  下载并安装最新工具包 12345678910# Download and install the latest SDK tools..&#x2F;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-18T08:10:44.792Z">
 <meta property="article:author" content="QSnowy">
+<meta property="article:tag" content="经验之谈">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+<link rel="canonical" href="http://yoursite.com/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/">
 
 
 <script id="page-configurations">
@@ -38,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 小技巧 | QSnowy</title>
+  <title>Mac安装Emscripten | QSnowy</title>
   
 
 
@@ -147,77 +150,130 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="QSnowy">
+      <meta itemprop="description" content="鲜花盛开，蝴蝶自来">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="QSnowy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mac安装Emscripten
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-18 00:00:00 / 修改时间：08:10:44" itemprop="dateCreated datePublished" datetime="2020-12-18T00:00:00+00:00">2020-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mac/" itemprop="url" rel="index"><span itemprop="name">Mac</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/" class="post-meta-item leancloud_visitors" data-flag-title="Mac安装Emscripten" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">小技巧
-          <small>标签</small>
-        </h2>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/18/Mac%E5%AE%89%E8%A3%85Emscripten/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2018</span>
-    </div>
+        <p>按照<a href="https://emscripten.org/docs/getting_started/downloads.html]" target="_blank" rel="noopener">官网</a>介绍进行环境配置，拉取代码到本地</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Get the emsdk repo</span></span><br><span class="line">git clone https://github.com/emscripten-core/emsdk.git]</span><br><span class="line"><span class="meta">#</span><span class="bash"> Enter that directory</span></span><br><span class="line">cd emsdk</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>下载并安装最新工具包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Download and install the latest SDK tools.</span></span><br><span class="line">./emsdk install latest</span><br><span class="line"><span class="meta">#</span><span class="bash"> Or use Python3 install and download tools.</span></span><br><span class="line">python3 ./emsdk.py install latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Make the <span class="string">"latest"</span> SDK <span class="string">"active"</span> <span class="keyword">for</span> the current user. (writes .emscripten file)</span></span><br><span class="line">./emsdk activate latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Activate PATH and other environment variables <span class="keyword">in</span> the current terminal</span></span><br><span class="line">source ./emsdk_env.sh</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-05-15T00:00:00+00:00"
-              content="2018-05-15">
-          05-15
-        </time>
-      </div>
+<p>但是当执行到  <code>./emsdk install latest</code> 时报错，<code>SSL error</code>，原因是 <code>emsdk.py</code> 文件有问题，在该文件加入如下代码，再次执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/05/15/iOS%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" itemprop="url">
-            <span itemprop="name">iOS开发过程中遇到的问题及解决方案</span>
-          </a>
-      </div>
 
-    </header>
-  </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-04-18T00:00:00+00:00"
-              content="2018-04-18">
-          04-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/04/18/iOS%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/" itemprop="url">
-            <span itemprop="name">iOS开发小技巧</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/" rel="tag"># 经验之谈</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/26/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAGithubPage%E5%8D%9A%E5%AE%A2/" rel="prev" title="使用Hexo搭建GithubPage博客">
+      <i class="fa fa-chevron-left"></i> 使用Hexo搭建GithubPage博客
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/18/Mac%E4%B8%8BCocoapods%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" rel="next" title="Mac下Cocoapods的安装和使用">
+      Mac下Cocoapods的安装和使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
