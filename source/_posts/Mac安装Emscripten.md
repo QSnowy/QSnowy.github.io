@@ -37,5 +37,26 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 ```
 
+新建  `Hello World` 程序，并编译该文件
 
+```c
+#include <stdio.h>
+int main(int argc, char ** argv) {
+	printf("Hello World"); 
+}
+```
+
+将c语言文件，编译为html文件
+
+```shell
+emcc hello.c -s WASM=1 -o hello.html
+```
+
+创建一个本地 `web server`，展示编译后文件
+
+```shell
+emrun --no_browser --port 8080 .
+```
+
+打开改[本地网站](http://localhost:8080/hello.html)，预览效果，可以在Emscripten控制台中看到  `Hello World` 输出信息。
 
